@@ -14,14 +14,18 @@ You'll need to also set up a postgresql database named gardenbuilder. I would fo
 
 Alternatively, you could run postgresql locally using docker: `docker run -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=gardenbuilder -p 127.0.0.1:5432:5432/tcp library/postgres`
 
-Finally, you'll need to add the following into the `config/.env`:
+Finally, you'll need to add the following into the `.env` file at the root of the project:
 
 ```
-DB_NAME=gardenbuilder
-DB_USER=root
-DB_PASSWORD=secret
-DB_HOST_LOCAL=localhost
-DB_PORT=5432
+TYPEORM_CONNECTION = postgres
+TYPEORM_HOST = localhost
+TYPEORM_USERNAME = yourUserName
+TYPEORM_PASSWORD = yourPassword
+TYPEORM_DATABASE = yourDatabaseName
+TYPEORM_PORT = 5432
+TYPEORM_SYNCHRONIZE = true
+TYPEORM_LOGGING = true
+TYPEORM_ENTITIES = entities/*.[jt]s,modules/**/entities/*.[jt]
 ```
 
 ### To Run
