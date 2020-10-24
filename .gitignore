@@ -1,0 +1,30 @@
+logfile
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.swp
+pids
+logs
+results
+tmp
+
+
+# secrets
+.env
+
+# editor
+.vscode
+
+# dependencies
+node_modules/
+
+# dist
+dist/
+
+# os metadata
+.DS_Store

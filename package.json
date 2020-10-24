@@ -1,0 +1,26 @@
+{
+  "name": "gardenbuilder-api-typescript",
+  "version": "1.0.0",
+  "description": "API for Gardenbuilder",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/gardenbuilder-app/gardenbuilder-backend-typescript.git"
+  },
+  "keywords": [
+    "typescript",
+    "gardening",
+    "node",
+    "graphql",
+    "typeorm"
+  ],
+  "author": "David Thompson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gardenbuilder-app/gardenbuilder-backend-typescript/issues"
+  },
+  "homepage": "https://github.com/gardenbuilder-app/gardenbuilder-backend-typescript#readme"
+}
