@@ -8,20 +8,20 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
-@Entity()
 @ObjectType()
+@Entity()
 export class User extends BaseEntity {
-  @Field(type => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id!: number
 
   @Field()
   @Column()
-  email: string
+  email!: string
 
-  @Field()
-  @Column()
-  password: string
+  // No Field decorator b/c we don't want this to be queryable
+  @Column({ unique: true })
+  password!: string
 
   @Field()
   @CreateDateColumn()
@@ -31,7 +31,6 @@ export class User extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date
 
-  @Field(type => Boolean)
   @Column({ default: false })
   isAdministrator: boolean
 }
