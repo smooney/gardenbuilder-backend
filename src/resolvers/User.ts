@@ -44,10 +44,8 @@ export class UserResolver {
       return errorResponse('Not a valid email address')
     }
 
-    // hash pwd
-    const hashedPassword = await argon2.hash(password)
-
     try {
+      const hashedPassword = await argon2.hash(password)
       const user = User.create({ email, password: hashedPassword })
       await user.save()
       return { user }
