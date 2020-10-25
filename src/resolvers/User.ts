@@ -50,7 +50,7 @@ export class UserResolver {
     try {
       const user = User.create({ email, password: hashedPassword })
       await user.save()
-      return user
+      return { user }
     } catch (err) {
       const errorMessage =
         err.code === '23505' ? 'User already exists' : err.message
