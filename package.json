@@ -28,6 +28,7 @@
   "homepage": "https://github.com/gardenbuilder-app/gardenbuilder-backend-typescript#readme",
   "dependencies": {
     "apollo-server": "^2.18.2",
+    "class-validator": "^0.12.2",
     "dotenv": "^8.2.0",
     "pg": "^8.4.1",
     "reflect-metadata": "^0.1.13",
