@@ -16,11 +16,11 @@ export class User extends BaseEntity {
   id!: number
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   email!: string
 
   // No Field decorator b/c we don't want this to be queryable
-  @Column({ unique: true })
+  @Column()
   password!: string
 
   @Field()
@@ -33,4 +33,6 @@ export class User extends BaseEntity {
 
   @Column({ default: false })
   isAdministrator: boolean
+
+  static findById: any
 }
