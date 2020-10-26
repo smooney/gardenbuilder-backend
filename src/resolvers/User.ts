@@ -12,11 +12,18 @@ import argon2 from 'argon2'
 import { User } from '../entities/User'
 import { Response } from '../types/Response'
 import { errorResponse } from '../libs/errorResponse'
+import jwt from '../libs/jwt'
 
 @ObjectType()
 class UserResponse extends Response {
   @Field(() => User, { nullable: true })
   user?: User
+}
+
+@ObjectType()
+class CreateUserResponse extends UserResponse {
+  @Field(() => String, { nullable: true })
+  token?: string
 }
 
 @Resolver()
@@ -35,7 +42,7 @@ export class UserResolver {
     return User.find()
   }
 
-  @Mutation(() => UserResponse)
+  @Mutation(() => CreateUserResponse)
   async createUser(
     @Arg('email') email: string,
     @Arg('password') password: string
@@ -43,12 +50,12 @@ export class UserResolver {
     if (!/@/i.test(email)) {
       return errorResponse('Not a valid email address')
     }
-
     try {
       const hashedPassword = await argon2.hash(password)
       const user = User.create({ email, password: hashedPassword })
+      const token = jwt.assign(email)
       await user.save()
-      return { user }
+      return { user, token }
     } catch (err) {
       const errorMessage =
         err.code === '23505' ? 'User already exists' : err.message
