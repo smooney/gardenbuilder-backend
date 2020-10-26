@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-function assign(email: string): string {
+export function assign(email: string): string {
   const jwtKey = process.env.JWT_HASH_KEY || 'test_key'
   const expiresInSeconds = 86400 // one day
   const token = jwt.sign({ email }, jwtKey, {
@@ -8,8 +8,4 @@ function assign(email: string): string {
     expiresIn: expiresInSeconds,
   })
   return token
-}
-
-export default {
-  assign,
 }

@@ -12,7 +12,7 @@ import argon2 from 'argon2'
 import { User } from '../entities/User'
 import { Response } from '../types/Response'
 import { errorResponse } from '../libs/errorResponse'
-import jwt from '../libs/jwt'
+import { assign } from '../libs/jwt'
 
 @ObjectType()
 class UserResponse extends Response {
@@ -64,7 +64,7 @@ export class UserResolver {
     try {
       const hashedPassword = await argon2.hash(password)
       const user = User.create({ email, password: hashedPassword })
-      const token = jwt.assign(email)
+      const token = assign(email)
       await user.save()
       return { user, token }
     } catch (err) {
