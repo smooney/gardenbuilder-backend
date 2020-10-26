@@ -21,6 +21,12 @@ class UserResponse extends Response {
 }
 
 @ObjectType()
+class UsersResponse extends Response {
+  @Field(() => [User], { nullable: true })
+  users?: User[]
+}
+
+@ObjectType()
 class CreateUserResponse extends UserResponse {
   @Field(() => String, { nullable: true })
   token?: string
@@ -37,9 +43,10 @@ export class UserResolver {
     return { user }
   }
 
-  @Query(() => [User])
+  @Query(() => UsersResponse)
   users() {
-    return User.find()
+    const users = User.find()
+    return { users }
   }
 
   @Mutation(() => CreateUserResponse)
