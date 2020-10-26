@@ -45,8 +45,12 @@ export class UserResolver {
 
   @Query(() => UsersResponse)
   users() {
-    const users = User.find()
-    return { users }
+    try {
+      const users = User.find()
+      return { users }
+    } catch (err) {
+      return errorResponse(err.message)
+    }
   }
 
   @Mutation(() => CreateUserResponse)
