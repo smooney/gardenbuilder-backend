@@ -6,7 +6,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm'
+import { Garden } from './Garden'
 
 @ObjectType()
 @Entity()
@@ -36,6 +38,12 @@ export class User extends BaseEntity {
     return parent.firstName + ' ' + parent.lastName
   }
 
+  @Column({ default: false })
+  isAdministrator: boolean
+
+  @OneToMany(() => Garden, (garden) => garden.owner)
+  gardens: Garden[]
+
   @Field()
   @CreateDateColumn()
   createdAt: Date
@@ -43,9 +51,6 @@ export class User extends BaseEntity {
   @Field()
   @UpdateDateColumn()
   updatedAt: Date
-
-  @Column({ default: false })
-  isAdministrator: boolean
 
   static findById: any
 }
