@@ -15,10 +15,12 @@ describe('createUser', () => {
   const globalUser = {
     email: faker.internet.email(),
     password: faker.internet.password(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
   }
   const createUserMutation = `
-  mutation CreateUser($email: String!, $password: String! ) {
-    createUser(email: $email, password: $password) {
+  mutation CreateUser($email: String!, $password: String!, $firstName: String!, $lastName: String! ) {
+    createUser(email: $email, password: $password, firstName: $firstName, lastName: $lastName) {
         user {
           email
         }
@@ -58,6 +60,8 @@ describe('createUser', () => {
     const user = {
       email: faker.internet.email(),
       password: faker.internet.password(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
     }
     const response = await callGraphQL({
       source: createUserMutation,
