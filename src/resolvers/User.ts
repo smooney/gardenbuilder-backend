@@ -56,14 +56,21 @@ export class UserResolver {
   @Mutation(() => CreateUserResponse)
   async createUser(
     @Arg('email') email: string,
-    @Arg('password') password: string
+    @Arg('password') password: string,
+    @Arg('firstName') firstName: string,
+    @Arg('lastName') lastName: string
   ) {
     if (!/@/i.test(email)) {
       return errorResponse('Not a valid email address')
     }
     try {
       const hashedPassword = await argon2.hash(password)
-      const user = User.create({ email, password: hashedPassword })
+      const user = User.create({
+        email,
+        password: hashedPassword,
+        firstName,
+        lastName,
+      })
       const token = assign(email)
       await user.save()
       return { user, token }
