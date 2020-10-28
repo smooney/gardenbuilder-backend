@@ -71,8 +71,8 @@ export class UserResolver {
         firstName,
         lastName,
       })
-      const token = assign(email)
-      await user.save()
+      const { id } = await user.save()
+      const token = assign(id.toString())
       return { user, token }
     } catch (err) {
       const errorMessage =

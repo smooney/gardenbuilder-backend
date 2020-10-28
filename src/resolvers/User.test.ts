@@ -67,6 +67,6 @@ describe('createUser', () => {
       source: createUserMutation,
       variableValues: user,
     })
-    expect(response?.data?.createUser.token.length).toBeGreaterThanOrEqual(160)
+    expect(response?.data?.createUser.token.length).toBeGreaterThanOrEqual(100)
   })
 })
