@@ -1,9 +1,12 @@
-import { Resolver, Query } from 'type-graphql'
+import { Resolver, Query, UseMiddleware } from 'type-graphql'
+import { isAuthorized } from '../middleware/isAuthorized'
 
 @Resolver()
 export class HelloWorld {
+  // @Authorized()
   @Query(() => String)
-  hello() {
+  @UseMiddleware(isAuthorized)
+  hello(): string {
     return 'world'
   }
 }

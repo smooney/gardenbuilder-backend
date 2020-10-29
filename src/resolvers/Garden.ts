@@ -13,23 +13,17 @@ import { Response } from '../types/Response'
 import { errorResponse } from '../libs/errorResponse'
 import { assign } from '../libs/jwt'
 
-// @ObjectType()
-// class UserResponse extends Response {
-//   @Field(() => User, { nullable: true })
-//   user?: User
-// }
+@ObjectType()
+class GardenResponse extends Response {
+  @Field(() => Garden, { nullable: true })
+  garden?: Garden
+}
 
 @ObjectType()
 class GardensResponse extends Response {
   @Field(() => [Garden], { nullable: true })
   gardens?: Garden[]
 }
-
-// @ObjectType()
-// class CreateUserResponse extends UserResponse {
-//   @Field(() => String, { nullable: true })
-//   token?: string
-// }
 
 @Resolver()
 export class GardenResolver {
@@ -52,30 +46,16 @@ export class GardenResolver {
     }
   }
 
-  //   @Mutation(() => CreateUserResponse)
-  //   async createUser(
-  //     @Arg('email') email: string,
-  //     @Arg('password') password: string,
-  //     @Arg('firstName') firstName: string,
-  //     @Arg('lastName') lastName: string
-  //   ) {
-  //     if (!/@/i.test(email)) {
-  //       return errorResponse('Not a valid email address')
-  //     }
-  //     try {
-  //       const user = User.create({
-  //         email,
-  //         password: hashedPassword,
-  //         firstName,
-  //         lastName,
-  //       })
-  //       const token = assign(email)
-  //       await user.save()
-  //       return { user, token }
-  //     } catch (err) {
-  //       const errorMessage =
-  //         err.code === '23505' ? 'User already exists' : err.message
-  //       return errorResponse(errorMessage)
-  //     }
-  //   }
+  @Mutation(() => GardenResponse)
+  async createGarden(@Arg('name') name: string) {
+    try {
+      const garden = Garden.create({
+        name,
+      })
+      await garden.save()
+      return { garden }
+    } catch (err) {
+      return errorResponse(err.message)
+    }
+  }
 }

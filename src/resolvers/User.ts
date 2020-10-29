@@ -80,4 +80,30 @@ export class UserResolver {
       return errorResponse(errorMessage)
     }
   }
+
+  @Mutation(() => CreateUserResponse)
+  async authenticateUser(
+    @Arg('email') email: string,
+    @Arg('password') password: string
+  ) {
+    if (!/@/i.test(email)) {
+      return errorResponse('Not a valid email address')
+    }
+    try {
+      const user = await User.findOne({
+        where: { email },
+      })
+      if (user) {
+        const passwordIsValid = await argon2.verify(user.password, password)
+        const token = assign(user.id.toString())
+        if (passwordIsValid) {
+          return { user, token }
+        }
+      }
+      return { user }
+    } catch (err) {
+      console.log(err)
+      return errorResponse(err.message)
+    }
+  }
 }

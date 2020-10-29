@@ -7,11 +7,5 @@ import { HelloWorld } from '../resolvers/HelloWorld'
 export async function createSchema(): Promise<GraphQLSchema> {
   return await buildSchema({
     resolvers: [GardenResolver, HelloWorld, UserResolver],
-    authChecker: ({ context: { req } }, roles) => {
-      if (req.session.userId) {
-        return true
-      }
-      return false
-    },
   })
 }
