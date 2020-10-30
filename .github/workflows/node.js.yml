@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [14.x]
     
     # Service containers to run with `container-job`
     services:
@@ -43,5 +43,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
+    - run: ls node_modules | grep jest
     - run: npm run build --if-present
     - run: npm test
