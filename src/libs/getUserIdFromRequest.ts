@@ -1,12 +1,13 @@
+import { Request } from 'apollo-server'
 import jwt from 'jsonwebtoken'
 import { RequestWithAuthenticationHeader } from '../types/RequestWithAuthenticationHeader'
+import { GraphQLRequest } from 'apollo-server-types'
 
 const JWT_HASH_KEY = process.env.JWT_HASH_KEY as string
 
 export function getUserIdFromRequest(
   req: RequestWithAuthenticationHeader
-  // eslint-disable-next-line @typescript-eslint/ban-types
-): string | object {
+): string | null {
   const token = req?.headers?.authorization
-  return jwt.verify(token, JWT_HASH_KEY)
+  return token ? (jwt.verify(<string>token, JWT_HASH_KEY) as string) : null
 }
