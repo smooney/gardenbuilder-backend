@@ -10,11 +10,3 @@ export function assign(email: string): string {
   })
   return token
 }
-
-// export function verify(token: string): string {
-//   jwt.verify(token, jwtKey, (err, decoded) => {
-//     if (err) console.log(err)
-//     console.log(decoded)
-//     return decoded
-//   }
-// }
