@@ -4,10 +4,12 @@
   "description": "API for Gardenbuilder",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "lint": "eslint . --ext .ts",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "start": "npm run start:dev",
     "start:dev": "NODE_ENV=development ts-node-dev src/index.ts",
+    "start:prod": "NODE_ENV=production node dist/index.js",
     "test": "jest",
     "test:local": "npm run test:setup-db && jest",
     "test:setup-db": "NODE_ENV=test ts-node ./src/test-utils/setup.ts"
