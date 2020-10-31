@@ -94,16 +94,23 @@ export class UserResolver {
         where: { email },
       })
       if (user) {
-        const passwordIsValid = await argon2.verify(user.password, password)
-        const token = assign(user.id.toString())
-        if (passwordIsValid) {
+        const token = await getTokenIfPasswordIsValid(user)
+        if (token) {
           return { user, token }
         }
       }
-      return { user }
+      return errorResponse('User does not exist')
     } catch (err) {
       console.log(err)
       return errorResponse(err.message)
+    }
+
+    async function getTokenIfPasswordIsValid(
+      user: User
+    ): Promise<string | null> {
+      const passwordIsValid = await argon2.verify(user?.password, password)
+      const token = assign(user.id.toString())
+      return passwordIsValid ? token : null
     }
   }
 }
