@@ -1,7 +1,7 @@
 import { Request } from 'apollo-server'
 
 type Header = {
-  authorization: string
+  authorization?: string
 }
 
 export interface RequestWithAuthenticationHeader extends Request {
