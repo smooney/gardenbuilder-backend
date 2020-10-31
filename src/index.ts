@@ -8,7 +8,7 @@ import { getUserIdFromRequest } from './libs/getUserIdFromRequest'
 const PORT = 8000
 
 async function setupAndRunServer() {
-  const connection = await createConnection()
+  await createConnection()
   const schema = await createSchema()
   const devMode = process.env.NODE_ENV === 'development'
   const server = new ApolloServer({
