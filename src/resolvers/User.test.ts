@@ -11,14 +11,14 @@ afterAll(async () => {
   await connection.close()
 })
 
-describe('createUser', () => {
-  const globalUser = {
-    email: faker.internet.email(),
-    password: faker.internet.password(),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-  }
-  const createUserMutation = `
+const globalUser = {
+  email: faker.internet.email(),
+  password: faker.internet.password(),
+  firstName: faker.name.firstName(),
+  lastName: faker.name.lastName(),
+}
+
+const createUserMutation = `
   mutation CreateUser($email: String!, $password: String!, $firstName: String!, $lastName: String! ) {
     createUser(email: $email, password: $password, firstName: $firstName, lastName: $lastName) {
         user {
@@ -32,6 +32,7 @@ describe('createUser', () => {
   }
   `
 
+describe('createUser', () => {
   it('returns its email address after creation', async () => {
     const response = await callGraphQL({
       source: createUserMutation,
@@ -68,5 +69,55 @@ describe('createUser', () => {
       variableValues: user,
     })
     expect(response?.data?.createUser.token.length).toBeGreaterThanOrEqual(100)
+  })
+})
+
+describe('createUser', () => {
+  const authenticateUserMutation = `
+  mutation AuthenticateUser($email: String!, $password: String!) {
+    authenticateUser(email: $email, password: $password) {
+        user {
+          email
+        }
+        error {
+          message
+        }
+        token
+    }
+  }
+  `
+
+  it('returns a jwt token for an authenticated user', async () => {
+    // create user in db
+    const createUserResponse = await callGraphQL({
+      source: createUserMutation,
+      variableValues: globalUser,
+    })
+    // authenticate user in db
+    const authenticateUserResponse = await callGraphQL({
+      source: authenticateUserMutation,
+      variableValues: {
+        email: globalUser.email,
+        password: globalUser.password,
+      },
+    })
+    expect(
+      authenticateUserResponse?.data?.authenticateUser.token.length
+    ).toBeGreaterThanOrEqual(100)
+  })
+
+  it('returns an error message, no token and no user if user not in database', async () => {
+    const authenticateUserResponse = await callGraphQL({
+      source: authenticateUserMutation,
+      variableValues: {
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+      },
+    })
+    expect(
+      authenticateUserResponse?.data?.authenticateUser.error.message
+    ).toBeTruthy()
+    expect(authenticateUserResponse?.data?.authenticateUser.user).toBeNull()
+    expect(authenticateUserResponse?.data?.authenticateUser.token).toBeNull()
   })
 })
