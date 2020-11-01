@@ -72,7 +72,7 @@ describe('createUser', () => {
   })
 })
 
-describe('createUser', () => {
+describe('authenticateUser', () => {
   const authenticateUserMutation = `
   mutation AuthenticateUser($email: String!, $password: String!) {
     authenticateUser(email: $email, password: $password) {
