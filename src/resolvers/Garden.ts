@@ -1,17 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import {
-  Resolver,
-  Query,
-  Field,
-  Mutation,
-  Arg,
-  Int,
-  ObjectType,
-} from 'type-graphql'
+import { Resolver, Query, Field, Mutation, Arg, ObjectType } from 'type-graphql'
 import { Garden } from '../entities/Garden'
 import { Response } from '../types/Response'
 import { errorResponse } from '../libs/errorResponse'
-import { assign } from '../libs/jwt'
 
 @ObjectType()
 class GardenResponse extends Response {
@@ -47,10 +38,14 @@ export class GardenResolver {
   }
 
   @Mutation(() => GardenResponse)
-  async createGarden(@Arg('name') name: string) {
+  async createGarden(
+    @Arg('name') name: string,
+    @Arg('ownerId') ownerId: number
+  ) {
     try {
       const garden = Garden.create({
         name,
+        ownerId,
       })
       await garden.save()
       return { garden }

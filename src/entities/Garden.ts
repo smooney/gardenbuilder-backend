@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType, Root } from 'type-graphql'
+import { Field, ID, Int, ObjectType, Root } from 'type-graphql'
 import {
   Entity,
   BaseEntity,
@@ -30,7 +30,7 @@ export class Garden extends BaseEntity {
   isActive: boolean
 
   //owner
-  @Field()
+  @Field(() => Int)
   @Column()
   ownerId: number
 
