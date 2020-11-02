@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Resolver, Query, Field, Mutation, Arg, ObjectType } from 'type-graphql'
+import {
+  Resolver,
+  Query,
+  Field,
+  Mutation,
+  Arg,
+  ObjectType,
+  Int,
+} from 'type-graphql'
 import { Garden } from '../entities/Garden'
 import { Response } from '../types/Response'
 import { errorResponse } from '../libs/errorResponse'
@@ -40,7 +48,7 @@ export class GardenResolver {
   @Mutation(() => GardenResponse)
   async createGarden(
     @Arg('name') name: string,
-    @Arg('ownerId') ownerId: number
+    @Arg('ownerId', () => Int) ownerId: number
   ) {
     try {
       const garden = Garden.create({
