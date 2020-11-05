@@ -7,12 +7,15 @@ import {
   Arg,
   Int,
   ObjectType,
+  Ctx,
 } from 'type-graphql'
 import argon2 from 'argon2'
 import { User } from '../entities/User'
 import { Response } from '../types/Response'
 import { errorResponse } from '../libs/errorResponse'
-import { assign } from '../libs/jwt'
+import jwt from '../libs/jwt'
+import { Context } from '../types/Context'
+import { getUserIdFromRequest } from '../libs/getUserIdFromRequest'
 
 @ObjectType()
 class UserResponse extends Response {
@@ -37,6 +40,16 @@ export class UserResolver {
   @Query(() => UserResponse)
   async user(@Arg('id', () => Int) id: number) {
     const user = await User.findOne(id)
+    if (!user) {
+      return errorResponse('User not found')
+    }
+    return { user }
+  }
+
+  @Query(() => UserResponse)
+  async currentUser(@Ctx() { req }: Context) {
+    const id = getUserIdFromRequest(req) as number
+    const user = await User.findOne({ id })
     if (!user) {
       return errorResponse('User not found')
     }
@@ -72,7 +85,7 @@ export class UserResolver {
         lastName,
       })
       const { id } = await user.save()
-      const token = assign(id.toString())
+      const token = jwt.assign(id.toString())
       return { user, token }
     } catch (err) {
       const errorMessage =
@@ -109,7 +122,7 @@ export class UserResolver {
       user: User
     ): Promise<string | null> {
       const passwordIsValid = await argon2.verify(user?.password, password)
-      const token = assign(user.id.toString())
+      const token = jwt.assign(user.id.toString())
       return passwordIsValid ? token : null
     }
   }

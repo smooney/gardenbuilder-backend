@@ -4,6 +4,7 @@ import { testConnection } from '../test-utils/createTestConnection'
 import faker from 'faker'
 import { User } from '../entities/User'
 import { Garden } from '../entities/Garden'
+import jwt from '../libs/jwt'
 
 let connection: Connection
 beforeAll(async () => {
@@ -14,11 +15,10 @@ afterAll(async () => {
 })
 
 const createGardenMutation = `
-mutation CreateGarden($name: String!, $ownerId: Int!) {
-    createGarden(name: $name, ownerId: $ownerId) {
+mutation CreateGarden($name: String!) {
+    createGarden(name: $name) {
       garden {
         name
-        ownerId
       }
       error {
         message
@@ -27,33 +27,42 @@ mutation CreateGarden($name: String!, $ownerId: Int!) {
   }
   `
 
-describe('createGarden', () => {
-  type GardenArguments = {
-    ownerId: number
-    name: string
-  }
+type CreateGardenArguments = {
+  name: string
+}
 
-  let gardenArguments: GardenArguments
+describe('createGarden', () => {
+  let gardenArguments: CreateGardenArguments
+  let ownerId: number
   beforeAll(async () => {
-    gardenArguments = {
-      name: faker.commerce.productName(),
-      ownerId: (await User.find({ take: 1 }))[0].id,
+    gardenArguments = await makeCreateGardenArguments()
+    ownerId = (await User.find({ take: 1 }))[0].id
+
+    async function makeCreateGardenArguments(): Promise<CreateGardenArguments> {
+      return {
+        name: faker.commerce.productName(),
+      }
     }
   })
   afterAll(async () => {
-    // remove garden from test db
-    await connection
-      .createQueryBuilder()
-      .delete()
-      .from(Garden)
-      .where('ownerId = :ownerId', { ownerId: gardenArguments.ownerId })
-      .execute()
+    removeGardenFromTestDatabase()
+
+    function removeGardenFromTestDatabase() {
+      connection
+        .createQueryBuilder()
+        .delete()
+        .from(Garden)
+        .where('ownerId = :ownerId', { ownerId })
+        .execute()
+    }
   })
 
-  it('returns its name and ownerId after creation', async () => {
+  it('returns its name after creation', async () => {
+    const token = jwt.assign(ownerId.toString())
     const response = await callGraphQL({
       source: createGardenMutation,
       variableValues: gardenArguments,
+      authorizationHeader: token,
     })
     expect(response).toMatchObject({
       data: {

@@ -7,10 +7,13 @@ import {
   Arg,
   ObjectType,
   Int,
+  Ctx,
 } from 'type-graphql'
 import { Garden } from '../entities/Garden'
 import { Response } from '../types/Response'
 import { errorResponse } from '../libs/errorResponse'
+import { Context } from '../types/Context'
+import { getUserIdFromRequest } from '../libs/getUserIdFromRequest'
 
 @ObjectType()
 class GardenResponse extends Response {
@@ -36,9 +39,10 @@ export class GardenResolver {
   //   }
 
   @Query(() => GardensResponse)
-  gardens() {
+  gardens(@Ctx() { req }: Context) {
     try {
-      const gardens = Garden.find()
+      const userId = getUserIdFromRequest(req)
+      const gardens = Garden.find({ where: { userId } })
       return { gardens }
     } catch (err) {
       return errorResponse(err.message)
@@ -46,10 +50,8 @@ export class GardenResolver {
   }
 
   @Mutation(() => GardenResponse)
-  async createGarden(
-    @Arg('name') name: string,
-    @Arg('ownerId', () => Int) ownerId: number
-  ) {
+  async createGarden(@Arg('name') name: string, @Ctx() { req }: Context) {
+    const ownerId = getUserIdFromRequest(req) as number
     try {
       const garden = Garden.create({
         name,
