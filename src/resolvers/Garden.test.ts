@@ -1,4 +1,4 @@
-import { Connection, getConnection } from 'typeorm'
+import { Connection } from 'typeorm'
 import { callGraphQL } from '../test-utils/callGraphQL'
 import { testConnection } from '../test-utils/createTestConnection'
 import faker from 'faker'
@@ -26,12 +26,24 @@ mutation CreateGarden($name: String!) {
     }
   }
   `
+const gardensQuery = `
+query Gardens {
+    gardens {
+      gardens {
+        name
+      }
+      error {
+        message
+      }
+    }
+  }
+  `
 
 type CreateGardenArguments = {
   name: string
 }
 
-describe('createGarden', () => {
+describe('the createGarden mutation', () => {
   let gardenArguments: CreateGardenArguments
   let ownerId: number
   beforeAll(async () => {
@@ -46,18 +58,18 @@ describe('createGarden', () => {
       }
     }
   })
-  afterAll(async () => {
-    removeGardenFromTestDatabase()
+  // afterAll(async () => {
+  //   removeGardenFromTestDatabase()
 
-    function removeGardenFromTestDatabase() {
-      connection
-        .createQueryBuilder()
-        .delete()
-        .from(Garden)
-        .where('ownerId = :ownerId', { ownerId })
-        .execute()
-    }
-  })
+  //   function removeGardenFromTestDatabase() {
+  //     connection
+  //       .createQueryBuilder()
+  //       .delete()
+  //       .from(Garden)
+  //       .where('ownerId = :ownerId', { ownerId })
+  //       .execute()
+  //   }
+  // })
 
   it('returns its name after creation', async () => {
     const token = jwt.assign(ownerId.toString())
@@ -73,5 +85,36 @@ describe('createGarden', () => {
         },
       },
     })
+  })
+})
+
+describe('the gardens query', () => {
+  // let gardenArguments: CreateGardenArguments
+  let ownerId: number
+  beforeAll(async () => {
+    ownerId = await getOwnerIdFromDatabase()
+    await createGardenInDatabaseForOwner(ownerId)
+
+    async function getOwnerIdFromDatabase(): Promise<number> {
+      const user = await User.find({ take: 1 })
+      return user[0].id
+    }
+
+    async function createGardenInDatabaseForOwner(ownerId: number) {
+      const garden = Garden.create({
+        name: 'A Cool Garden',
+        ownerId,
+      })
+      await garden.save()
+    }
+  })
+
+  it('returns a list of gardens', async () => {
+    const token = jwt.assign(ownerId.toString())
+    const response = await callGraphQL({
+      source: gardensQuery,
+      authorizationHeader: token,
+    })
+    expect(response?.data?.gardens.gardens.includes({ name: 'A Cool Garden' }))
   })
 })

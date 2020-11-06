@@ -41,8 +41,8 @@ export class GardenResolver {
   @Query(() => GardensResponse)
   gardens(@Ctx() { req }: Context) {
     try {
-      const userId = getUserIdFromRequest(req)
-      const gardens = Garden.find({ where: { userId } })
+      const ownerId = getUserIdFromRequest(req)
+      const gardens = Garden.find({ where: { ownerId } })
       return { gardens }
     } catch (err) {
       return errorResponse(err.message)
