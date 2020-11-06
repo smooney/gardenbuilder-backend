@@ -36,7 +36,9 @@ describe('createGarden', () => {
   let ownerId: number
   beforeAll(async () => {
     gardenArguments = await makeCreateGardenArguments()
-    ownerId = (await User.find({ take: 1 }))[0].id
+
+    const user = await User.find({ take: 1 })
+    ownerId = user[0].id
 
     async function makeCreateGardenArguments(): Promise<CreateGardenArguments> {
       return {
