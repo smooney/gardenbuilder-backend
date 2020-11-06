@@ -89,7 +89,6 @@ describe('the createGarden mutation', () => {
 })
 
 describe('the gardens query', () => {
-  // let gardenArguments: CreateGardenArguments
   let ownerId: number
   beforeAll(async () => {
     ownerId = await getOwnerIdFromDatabase()
