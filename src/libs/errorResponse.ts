@@ -6,7 +6,9 @@ import { Response } from '../types/Response'
  * @returns [Object]
  */
 export const errorResponse = (errorMessage: string): Response => ({
-  error: {
-    message: errorMessage,
-  },
+  errors: [
+    {
+      message: errorMessage,
+    },
+  ],
 })

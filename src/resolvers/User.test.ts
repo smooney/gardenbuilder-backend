@@ -24,7 +24,7 @@ const createUserMutation = `
         user {
           email
         }
-        error {
+        errors {
           message
         }
         token
@@ -54,7 +54,8 @@ describe('createUser', () => {
       source: createUserMutation,
       variableValues: globalUser,
     })
-    expect(response?.data?.createUser.error.message).toMatch(/exists/)
+    const errorMessage = response?.data?.createUser.errors[0].message
+    expect(errorMessage).toMatch(/exists/)
   })
 
   it('returns a jwt token', async () => {
@@ -79,7 +80,7 @@ describe('authenticateUser', () => {
         user {
           email
         }
-        error {
+        errors {
           message
         }
         token
@@ -115,8 +116,8 @@ describe('authenticateUser', () => {
       },
     })
     expect(
-      authenticateUserResponse?.data?.authenticateUser.error.message
-    ).toBeTruthy()
+      authenticateUserResponse?.data?.authenticateUser.errors
+    ).toHaveLength(1)
     expect(authenticateUserResponse?.data?.authenticateUser.user).toBeNull()
     expect(authenticateUserResponse?.data?.authenticateUser.token).toBeNull()
   })

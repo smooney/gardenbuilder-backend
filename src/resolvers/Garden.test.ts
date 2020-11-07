@@ -20,7 +20,7 @@ mutation CreateGarden($name: String!) {
       garden {
         name
       }
-      error {
+      errors {
         message
       }
     }
@@ -32,7 +32,7 @@ query Gardens {
       gardens {
         name
       }
-      error {
+      errors {
         message
       }
     }
@@ -91,12 +91,18 @@ describe('the createGarden mutation', () => {
 describe('the gardens query', () => {
   let ownerId: number
   beforeAll(async () => {
-    ownerId = await getOwnerIdFromDatabase()
+    ownerId = await createUserInDatabase()
     await createGardenInDatabaseForOwner(ownerId)
 
-    async function getOwnerIdFromDatabase(): Promise<number> {
-      const user = await User.find({ take: 1 })
-      return user[0].id
+    async function createUserInDatabase(): Promise<number> {
+      const user = User.create({
+        email: 'test@email.com',
+        password: 'TestTestTest',
+        firstName: 'Kendrick',
+        lastName: 'Lamar',
+      })
+      const { id } = await user.save()
+      return id
     }
 
     async function createGardenInDatabaseForOwner(ownerId: number) {

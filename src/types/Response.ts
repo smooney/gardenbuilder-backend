@@ -3,6 +3,6 @@ import { Error } from '../types/Error'
 
 @ObjectType()
 export class Response {
-  @Field(() => Error, { nullable: true })
-  error?: Error
+  @Field(() => [Error], { nullable: true })
+  errors?: Error[]
 }
