@@ -1,6 +1,4 @@
-import { Connection, createConnection } from 'typeorm'
-
-import { getConnectionOptions } from 'typeorm'
+import { Connection, createConnection, getConnectionOptions } from 'typeorm'
 
 export async function testConnection(drop = false): Promise<Connection> {
   let connectionOptions = await getConnectionOptions()

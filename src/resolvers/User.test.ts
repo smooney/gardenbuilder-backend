@@ -1,6 +1,7 @@
 import { Connection } from 'typeorm'
-import { callGraphQL } from '../test-utils/callGraphQL'
-import { testConnection } from '../test-utils/createTestConnection'
+// import { callGraphQL, testConnection } from '../utils/test'
+import { callGraphQL } from '../utils/test/callGraphQL'
+import { testConnection } from '../utils/test/testConnection'
 import faker from 'faker'
 
 let connection: Connection
@@ -89,11 +90,12 @@ describe('authenticateUser', () => {
   `
 
   it('returns a jwt token for an authenticated user', async () => {
-    // create user in db
-    const createUserResponse = await callGraphQL({
+    // TODO: Create a user with db, not graphql
+    await callGraphQL({
       source: createUserMutation,
       variableValues: globalUser,
     })
+
     // authenticate user in db
     const authenticateUserResponse = await callGraphQL({
       source: authenticateUserMutation,

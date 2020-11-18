@@ -1,4 +1,4 @@
-import { Field, ID, Int, ObjectType, Root } from 'type-graphql'
+import { Field, ID, Int, ObjectType } from 'type-graphql'
 import {
   Entity,
   BaseEntity,
@@ -26,16 +26,15 @@ export class Garden extends BaseEntity {
   endedAt: Date
 
   @Field()
-  @Column({ default: false })
+  @Column({ default: true })
   isActive: boolean
 
-  //owner
   @Field(() => Int)
   @Column()
   ownerId: number
 
-  //@Field()
-  @ManyToOne(() => User, (user) => user.gardens)
+  @Field(() => User)
+  @ManyToOne(() => User, (owner) => owner.gardens, { onDelete: 'CASCADE' })
   owner: User
 
   @Field()

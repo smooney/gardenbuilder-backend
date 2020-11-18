@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { createConnection } from 'typeorm'
 import { ApolloServer } from 'apollo-server'
-import { createSchema } from './libs/createSchema'
+import { createSchema } from './utils/createSchema'
 import { RequestWithAuthenticationHeader } from './types/RequestWithAuthenticationHeader'
 
 const PORT = 8000

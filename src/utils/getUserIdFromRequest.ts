@@ -1,5 +1,5 @@
 import { RequestWithAuthenticationHeader } from '../types/RequestWithAuthenticationHeader'
-import jwt from '../libs/jwt'
+import jwt from './jwt'
 
 export function getUserIdFromRequest(
   req: RequestWithAuthenticationHeader

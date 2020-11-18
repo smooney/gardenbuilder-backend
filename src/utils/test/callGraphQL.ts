@@ -1,7 +1,7 @@
 import { graphql, GraphQLSchema } from 'graphql'
 import { Maybe } from 'type-graphql'
-import { createSchema } from '../libs/createSchema'
-import { RequestWithAuthenticationHeader } from '../types/RequestWithAuthenticationHeader'
+import { createSchema } from '../createSchema'
+import { RequestWithAuthenticationHeader } from '../../types/RequestWithAuthenticationHeader'
 
 interface Options {
   source: string

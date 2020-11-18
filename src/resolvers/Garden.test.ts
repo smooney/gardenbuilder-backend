@@ -1,22 +1,29 @@
 import { Connection } from 'typeorm'
-import { callGraphQL } from '../test-utils/callGraphQL'
-import { testConnection } from '../test-utils/createTestConnection'
+import { callGraphQL, testConnection } from '../utils/test'
 import faker from 'faker'
 import { User } from '../entities/User'
 import { Garden } from '../entities/Garden'
-import jwt from '../libs/jwt'
+import jwt from '../utils/jwt'
 
 let connection: Connection
+let garden: Garden
+let token: string
+let owner: User
+
 beforeAll(async () => {
   connection = await testConnection()
-})
-afterAll(async () => {
-  await connection.close()
+  owner = await createUserInDatabase()
+  garden = await createGardenInDatabase(owner, 'Default Garden')
+  token = jwt.assign(owner.id.toString())
 })
 
-const createGardenMutation = `
-mutation CreateGarden($name: String!) {
-    createGarden(name: $name) {
+afterAll(async () => {
+  connection.close()
+})
+
+const gardenQuery = `
+query Garden($id: Int!) {
+    garden(id: $id) {
       garden {
         name
       }
@@ -26,6 +33,7 @@ mutation CreateGarden($name: String!) {
     }
   }
   `
+
 const gardensQuery = `
 query Gardens {
     gardens {
@@ -39,87 +47,88 @@ query Gardens {
   }
   `
 
-type CreateGardenArguments = {
-  name: string
-}
-
-describe('the createGarden mutation', () => {
-  let gardenArguments: CreateGardenArguments
-  let ownerId: number
-  beforeAll(async () => {
-    gardenArguments = await makeCreateGardenArguments()
-
-    const user = await User.find({ take: 1 })
-    ownerId = user[0].id
-
-    async function makeCreateGardenArguments(): Promise<CreateGardenArguments> {
-      return {
-        name: faker.commerce.productName(),
+const createGardenMutation = `
+mutation CreateGarden($name: String!) {
+    createGarden(name: $name) {
+      garden {
+        name
+      }
+      errors {
+        message
       }
     }
-  })
-  // afterAll(async () => {
-  //   removeGardenFromTestDatabase()
+  }
+  `
 
-  //   function removeGardenFromTestDatabase() {
-  //     connection
-  //       .createQueryBuilder()
-  //       .delete()
-  //       .from(Garden)
-  //       .where('ownerId = :ownerId', { ownerId })
-  //       .execute()
-  //   }
-  // })
-
-  it('returns its name after creation', async () => {
-    const token = jwt.assign(ownerId.toString())
+describe('the garden query', () => {
+  it('returns the name of an existing garden', async () => {
     const response = await callGraphQL({
-      source: createGardenMutation,
-      variableValues: gardenArguments,
+      source: gardenQuery,
+      variableValues: { id: garden.id },
       authorizationHeader: token,
     })
+    expect(response?.data?.garden.garden.name).toBe('Default Garden')
+  })
+})
+
+describe('the gardens query', () => {
+  it('returns a list of gardens', async () => {
+    const response = await callGraphQL({
+      source: gardensQuery,
+      authorizationHeader: token,
+    })
+    expect(response?.data?.gardens.gardens.includes({ name: 'Default Garden' }))
+  })
+})
+
+describe('the createGarden mutation', () => {
+  const name: string = faker.commerce.productName()
+  let response: any
+
+  beforeAll(async () => {
+    response = await callGraphQL({
+      source: createGardenMutation,
+      variableValues: { name },
+      authorizationHeader: token,
+    })
+  })
+
+  it('inserts a garden into the database', async () => {
+    const garden = await Garden.findOne({ where: { name } })
+    expect(garden).toBeTruthy()
+  })
+
+  it('returns its name after creation', async () => {
     expect(response).toMatchObject({
       data: {
         createGarden: {
-          garden: gardenArguments,
+          garden: {
+            name,
+          },
         },
       },
     })
   })
 })
 
-describe('the gardens query', () => {
-  let ownerId: number
-  beforeAll(async () => {
-    ownerId = await createUserInDatabase()
-    await createGardenInDatabaseForOwner(ownerId)
-
-    async function createUserInDatabase(): Promise<number> {
-      const user = User.create({
-        email: 'test@email.com',
-        password: 'TestTestTest',
-        firstName: 'Kendrick',
-        lastName: 'Lamar',
-      })
-      const { id } = await user.save()
-      return id
-    }
-
-    async function createGardenInDatabaseForOwner(ownerId: number) {
-      const garden = Garden.create({
-        name: 'A Cool Garden',
-        ownerId,
-      })
-      await garden.save()
-    }
+async function createUserInDatabase(): Promise<User> {
+  const user = User.create({
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
   })
+  await connection.manager.save(user)
+  return user
+}
 
-  it('returns a list of gardens', async () => {
-    const token = jwt.assign(ownerId.toString())
-    const response = await callGraphQL({
-      source: gardensQuery,
-      authorizationHeader: token,
-    })
-    expect(response?.data?.gardens.gardens.includes({ name: 'A Cool Garden' }))
+async function createGardenInDatabase(
+  owner: User,
+  name: string
+): Promise<Garden> {
+  const garden = Garden.create({
+    name,
+    owner,
   })
-})
+  return await garden.save()
+}

@@ -11,8 +11,7 @@
     "start:dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "start:prod": "NODE_ENV=production node dist/index.js",
     "test": "jest",
-    "test:local": "npm run test:setup-db && jest",
-    "test:setup-db": "NODE_ENV=test ts-node ./src/test-utils/setup.ts"
+    "test:setup-db": "NODE_ENV=test ts-node ./src/utils/test/setup.ts"
   },
   "repository": {
     "type": "git",
@@ -64,6 +63,7 @@
   },
   "pre-commit": [
     "format",
-    "test:local"
+    "lint",
+    "test"
   ]
 }

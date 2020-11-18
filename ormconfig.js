@@ -6,14 +6,14 @@ const database = {
   test: 'test',
 }
 
-module.exports = {
+const config = {
   type: 'postgres',
   host: 'localhost',
   port: 5432,
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
   database: database[process.env.NODE_ENV],
-  dropSchema: process.env.NODE_ENV === 'test',
+  // dropSchema: process.env.NODE_ENV === 'test',
   // entities: ['dist/**/*.entity{.ts,.js}'],
   entities: ['src/entities/*.[jt]s', 'modules/**/entities/*.[jt]s'],
   logging: process.env.NODE_ENV === 'development',
@@ -24,3 +24,5 @@ module.exports = {
     migrationsDir: 'migration',
   },
 }
+
+module.exports = config

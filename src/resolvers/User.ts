@@ -12,10 +12,10 @@ import {
 import argon2 from 'argon2'
 import { User } from '../entities/User'
 import { Response } from '../types/Response'
-import { errorResponse } from '../libs/errorResponse'
-import jwt from '../libs/jwt'
+import { errorResponse } from '../utils/errorResponse'
+import jwt from '../utils/jwt'
 import { Context } from '../types/Context'
-import { getUserIdFromRequest } from '../libs/getUserIdFromRequest'
+import { getUserIdFromRequest } from '../utils/getUserIdFromRequest'
 
 @ObjectType()
 class UserResponse extends Response {
