@@ -23,6 +23,28 @@ afterAll(async () => {
   connection.close()
 })
 
-it('should allow a bed to be created', () => {
-  expect(bed).toBeTruthy()
+it('should have expected properties', () => {
+  const keys = Object.keys(bed)
+  const properties = [
+    'id',
+    'name',
+    'endedAt',
+    'isActive',
+    'gardenId',
+    'createdAt',
+    'updatedAt',
+  ]
+  properties.forEach((property) => {
+    expect(keys.includes(property)).toBe(true)
+  })
+})
+
+it('should have propery types of the expected type', () => {
+  expect(Number.isInteger(bed.id)).toBe(true)
+  expect(typeof bed.name).toBe('string')
+  expect(bed.endedAt instanceof Date).toBe(true)
+  expect(typeof bed.isActive).toBe('boolean')
+  expect(bed.gardenId).toEqual(garden.id)
+  expect(bed.createdAt instanceof Date).toBe(true)
+  expect(bed.updatedAt instanceof Date).toBe(true)
 })
