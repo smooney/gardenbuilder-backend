@@ -24,6 +24,5 @@ afterAll(async () => {
 })
 
 it('should allow a bed to be created', () => {
-  console.log(bed)
   expect(bed).toBeTruthy()
 })
