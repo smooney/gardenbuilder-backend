@@ -7,8 +7,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm'
 import { User } from './User'
+import { Bed } from './Bed'
 
 @ObjectType()
 @Entity()
@@ -36,6 +38,9 @@ export class Garden extends BaseEntity {
   @Field(() => User)
   @ManyToOne(() => User, (owner) => owner.gardens, { onDelete: 'CASCADE' })
   owner: User
+
+  @OneToMany(() => Bed, (bed) => bed.garden)
+  beds: Bed[]
 
   @Field()
   @CreateDateColumn()
