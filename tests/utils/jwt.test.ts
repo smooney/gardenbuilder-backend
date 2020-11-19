@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { assign, getUserId, verify } = require('./jwt')
+import { assign, getUserId, verify } from '../../src/utils'
 
 describe('the assign function', () => {
   const token = assign('666')

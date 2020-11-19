@@ -1,11 +1,13 @@
-import { Connection } from 'typeorm'
-import { callGraphQL, testConnection } from '../utils/test'
 import faker from 'faker'
-import { User } from '../entities/User'
-import { Garden } from '../entities/Garden'
-import jwt from '../utils/jwt'
-import { createGardenInDatabase } from '../utils/test/createGardenInDatabase'
-import { createUserInDatabase } from '../utils/test/createUserInDatabase'
+import { Connection } from 'typeorm'
+import jwt from '../../src/utils/jwt'
+import {
+  callGraphQL,
+  createGardenInDatabase,
+  createUserInDatabase,
+  testConnection,
+} from '../testUtils'
+import { Garden, User } from '../../src/entities'
 
 let connection: Connection
 let garden: Garden

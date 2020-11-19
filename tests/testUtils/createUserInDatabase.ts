@@ -1,5 +1,5 @@
 import faker from 'faker'
-import { User } from '../../entities/User'
+import { User } from '../../src/entities'
 
 export async function createUserInDatabase(): Promise<User> {
   const user = User.create({

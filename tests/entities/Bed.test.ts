@@ -1,8 +1,11 @@
 import { Connection } from 'typeorm'
-import { testConnection } from '../utils/test'
-import { Bed, Garden, User } from '../entities'
-import { createGardenInDatabase } from '../utils/test/createGardenInDatabase'
-import { createUserInDatabase } from '../utils/test/createUserInDatabase'
+import {
+  createBedInDatabase,
+  createGardenInDatabase,
+  createUserInDatabase,
+  testConnection,
+} from '../testUtils'
+import { Bed, Garden, User } from '../../src/entities'
 
 let connection: Connection
 let owner: User
@@ -13,7 +16,7 @@ beforeAll(async () => {
   connection = await testConnection()
   owner = await createUserInDatabase()
   garden = await createGardenInDatabase(owner)
-  //   bed = await createBedInDatabase(garden)
+  bed = await createBedInDatabase(garden)
 })
 
 afterAll(async () => {
@@ -21,5 +24,6 @@ afterAll(async () => {
 })
 
 it('should allow a bed to be created', () => {
-  expect(true).toBeTruthy()
+  console.log(bed)
+  expect(bed).toBeTruthy()
 })

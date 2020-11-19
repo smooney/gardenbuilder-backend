@@ -1,6 +1,5 @@
 import faker from 'faker'
-import { User } from '../../entities/User'
-import { Garden } from '../../entities/Garden'
+import { Garden, User } from '../../src/entities'
 
 export async function createGardenInDatabase(
   owner: User,

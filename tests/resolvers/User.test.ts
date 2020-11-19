@@ -1,8 +1,6 @@
-import { Connection } from 'typeorm'
-// import { callGraphQL, testConnection } from '../utils/test'
-import { callGraphQL } from '../utils/test/callGraphQL'
-import { testConnection } from '../utils/test/testConnection'
 import faker from 'faker'
+import { Connection } from 'typeorm'
+import { callGraphQL, testConnection } from '../testUtils'
 
 let connection: Connection
 beforeAll(async () => {
