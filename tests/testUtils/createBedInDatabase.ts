@@ -9,6 +9,5 @@ export async function createBedInDatabase(
     garden,
     name,
   })
-  console.log(bed)
   return await bed.save()
 }
