@@ -11,7 +11,7 @@
     "start:dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "start:prod": "NODE_ENV=production node dist/index.js",
     "test": "npm run test:clear-database && jest",
-    "test:clear-database": "NODE_ENV=test ts-node ./src/utils/test/clearTestDatabase.ts"
+    "test:clear-database": "NODE_ENV=test ts-node ./tests/testUtils/clearTestDatabase.ts"
   },
   "repository": {
     "type": "git",
