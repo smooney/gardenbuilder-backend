@@ -7,21 +7,19 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToMany,
 } from 'typeorm'
-import { User } from './User'
-import { Bed } from './Bed'
+import { Garden } from './Garden'
 
 @ObjectType()
 @Entity()
-export class Garden extends BaseEntity {
+export class Bed extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id!: number
 
   @Field()
   @Column()
-  name!: string
+  name: string
 
   @Field()
   @UpdateDateColumn()
@@ -33,14 +31,11 @@ export class Garden extends BaseEntity {
 
   @Field(() => Int)
   @Column()
-  ownerId: number
+  gardenId: number
 
-  @Field(() => User)
-  @ManyToOne(() => User, (owner) => owner.gardens, { onDelete: 'CASCADE' })
-  owner: User
-
-  @OneToMany(() => Bed, (bed) => bed.garden)
-  beds: Bed[]
+  @Field(() => Garden)
+  @ManyToOne(() => Garden, (garden) => garden.beds, { onDelete: 'CASCADE' })
+  garden: Garden
 
   @Field()
   @CreateDateColumn()

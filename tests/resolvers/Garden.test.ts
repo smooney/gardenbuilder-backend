@@ -1,9 +1,13 @@
-import { Connection } from 'typeorm'
-import { callGraphQL, testConnection } from '../utils/test'
 import faker from 'faker'
-import { User } from '../entities/User'
-import { Garden } from '../entities/Garden'
-import jwt from '../utils/jwt'
+import { Connection } from 'typeorm'
+import jwt from '../../src/utils/jwt'
+import {
+  callGraphQL,
+  createGardenInDatabase,
+  createUserInDatabase,
+  testConnection,
+} from '../testUtils'
+import { Garden, User } from '../../src/entities'
 
 let connection: Connection
 let garden: Garden
@@ -110,25 +114,3 @@ describe('the createGarden mutation', () => {
     })
   })
 })
-
-async function createUserInDatabase(): Promise<User> {
-  const user = User.create({
-    email: faker.internet.email(),
-    password: faker.internet.password(),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-  })
-  await connection.manager.save(user)
-  return user
-}
-
-async function createGardenInDatabase(
-  owner: User,
-  name: string
-): Promise<Garden> {
-  const garden = Garden.create({
-    name,
-    owner,
-  })
-  return await garden.save()
-}

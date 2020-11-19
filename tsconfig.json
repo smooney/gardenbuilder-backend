@@ -12,5 +12,10 @@
     "outDir": "dist"
   },
   "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"],
-  "include": ["./src/**/*.tsx", "./src/**/*.ts"]
+  "include": [
+    "./src/**/*.tsx",
+    "./src/**/*.ts",
+    "tests/resolvers/Garden.test.ts",
+    "tests/entities/Bed.test.ts"
+  ]
 }
