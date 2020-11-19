@@ -10,8 +10,8 @@
     "start": "npm run start:dev",
     "start:dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "start:prod": "NODE_ENV=production node dist/index.js",
-    "test": "jest",
-    "test:setup-db": "NODE_ENV=test ts-node ./src/utils/test/setup.ts"
+    "test": "npm run test:clear-database && jest",
+    "test:clear-database": "NODE_ENV=test ts-node ./src/utils/test/clearTestDatabase.ts"
   },
   "repository": {
     "type": "git",
