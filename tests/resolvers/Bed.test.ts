@@ -4,8 +4,8 @@ import jwt from '../../src/utils/jwt'
 import {
   callGraphQL,
   createBedInDatabase,
-  createGardenInDatabase,
-  createUserInDatabase,
+  createGarden,
+  createUser,
   testConnection,
 } from '../testUtils'
 import { Bed, Garden, User } from '../../src/entities'
@@ -18,10 +18,10 @@ let token: string
 
 beforeAll(async () => {
   connection = await testConnection()
-  owner = await createUserInDatabase()
-  garden = await createGardenInDatabase(owner)
+  owner = createUser()
+  garden = createGarden(owner)
   bed = await createBedInDatabase(garden)
-  token = jwt.assign(owner.id.toString())
+  token = jwt.assign(bed.gardenId.toString())
 })
 
 afterAll(async () => {
@@ -105,7 +105,7 @@ describe('the createBed mutation', () => {
 
   beforeAll(async () => {
     name = faker.commerce.productName()
-    gardenId = garden.id
+    gardenId = bed.gardenId
 
     response = await callGraphQL({
       source: createBedMutation,

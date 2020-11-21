@@ -35,8 +35,12 @@ export class Garden extends BaseEntity {
   @Column()
   ownerId: number
 
+  // cascade means that a new user will be created if passed to user
   @Field(() => User)
-  @ManyToOne(() => User, (owner) => owner.gardens, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (owner) => owner.gardens, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   owner: User
 
   @OneToMany(() => Bed, (bed) => bed.garden)
