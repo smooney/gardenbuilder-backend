@@ -28,18 +28,18 @@ afterAll(async () => {
   connection.close()
 })
 
-// const gardenQuery = `
-// query Garden($id: Int!) {
-//     garden(id: $id) {
-//       garden {
-//         name
-//       }
-//       errors {
-//         message
-//       }
-//     }
-//   }
-//   `
+const bedQuery = `
+query Bed($id: Int!) {
+    bed(id: $id) {
+      bed {
+        name
+      }
+      errors {
+        message
+      }
+    }
+  }
+  `
 
 const bedsQuery = `
 query Beds {
@@ -67,16 +67,26 @@ query Beds {
 //   }
 //   `
 
-// describe('the garden query', () => {
-//   it('returns the name of an existing garden', async () => {
-//     const response = await callGraphQL({
-//       source: gardenQuery,
-//       variableValues: { id: garden.id },
-//       authorizationHeader: token,
-//     })
-//     expect(response?.data?.garden.garden.name).toBe('Default Garden')
-//   })
-// })
+describe('the bed query', () => {
+  it('returns the name of an existing bed', async () => {
+    const response = await callGraphQL({
+      source: bedQuery,
+      variableValues: { id: bed.id },
+      authorizationHeader: token,
+    })
+    expect(response?.data?.bed.bed.name).toBe(bed.name)
+  })
+
+  it('returns no beds if called with a nonexistent id', async () => {
+    const FAKE_ID = 666
+    const response = await callGraphQL({
+      source: bedQuery,
+      variableValues: { id: FAKE_ID },
+      authorizationHeader: token,
+    })
+    expect(response?.data?.bed.bed).toBeNull()
+  })
+})
 
 describe('the beds query', () => {
   it('returns a list of beds', async () => {
