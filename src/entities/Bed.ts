@@ -7,8 +7,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm'
 import { Garden } from './Garden'
+import { Section } from './Section'
 
 @ObjectType()
 @Entity()
@@ -41,6 +43,9 @@ export class Bed extends BaseEntity {
     onDelete: 'CASCADE',
   })
   garden: Garden
+
+  @OneToMany(() => Section, (section) => section.bed)
+  sections: Section[]
 
   @Field()
   @CreateDateColumn()
