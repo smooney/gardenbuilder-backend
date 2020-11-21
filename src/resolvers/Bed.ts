@@ -6,20 +6,18 @@ import { Context, BedResponse, BedsResponse } from '../types'
 
 @Resolver()
 export class BedResolver {
-  // @Query(() => GardenResponse)
-  // async garden(@Arg('id', () => Int) id: number) {
-  //   const garden = await Garden.findOne(id)
-  //   if (!garden) {
-  //     return errorResponse('Garden not found')
-  //   }
-  //   return { garden }
-  // }
+  @Query(() => BedResponse)
+  async bed(@Arg('id', () => Int) id: number) {
+    const bed = await Bed.findOne(id)
+    if (!bed) {
+      return errorResponse('Bed not found')
+    }
+    return { bed }
+  }
 
   @Query(() => BedsResponse)
   async beds(@Arg('gardenId') gardenId: number, @Ctx() { req }: Context) {
     try {
-      // TODO: Add check for if garden belongs to user
-      // const ownerId = getUserIdFromRequest(req)
       const garden: Garden | undefined = await Garden.findOne({
         where: { id: gardenId },
       })
