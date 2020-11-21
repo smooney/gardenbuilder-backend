@@ -28,19 +28,26 @@ export class BedResolver {
     }
   }
 
-  // @Mutation(() => GardenResponse)
-  // async createGarden(@Arg('name') name: string, @Ctx() { req }: Context) {
-  //   const ownerId = getUserIdFromRequest(req) as number
-  //   try {
-  //     const owner = await User.findOne({ id: ownerId })
-  //     const garden = Garden.create({
-  //       name,
-  //       owner,
-  //     })
-  //     await garden.save()
-  //     return { garden }
-  //   } catch (err) {
-  //     return errorResponse(err.message)
-  //   }
-  // }
+  @Mutation(() => BedResponse)
+  async createBed(
+    @Arg('gardenId', () => Int) gardenId: number,
+    @Arg('name', () => String, { nullable: true }) name: string,
+    @Ctx() { req }: Context
+  ) {
+    // TODO: Validate that garden belongs to owner
+    // const ownerId = getUserIdFromRequest(req) as number
+    //  const owner = await User.findOne({ id: ownerId })
+    try {
+      const garden = await Garden.findOne({ id: gardenId })
+      const bed = Bed.create({
+        gardenId,
+        garden,
+        name,
+      })
+      await bed.save()
+      return { bed }
+    } catch (err) {
+      return errorResponse(err.message)
+    }
+  }
 }

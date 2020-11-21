@@ -54,18 +54,18 @@ query Beds {
   }
   `
 
-// const createGardenMutation = `
-// mutation CreateGarden($name: String!) {
-//     createGarden(name: $name) {
-//       garden {
-//         name
-//       }
-//       errors {
-//         message
-//       }
-//     }
-//   }
-//   `
+const createBedMutation = `
+mutation CreateBed($gardenId: Int!, $name: String) {
+    createBed(gardenId: $gardenId, name: $name) {
+      bed {
+        name
+      }
+      errors {
+        message
+      }
+    }
+  }
+  `
 
 describe('the bed query', () => {
   it('returns the name of an existing bed', async () => {
@@ -98,32 +98,36 @@ describe('the beds query', () => {
   })
 })
 
-// describe('the createGarden mutation', () => {
-//   const name: string = faker.commerce.productName()
-//   let response: any
+describe('the createBed mutation', () => {
+  let name: string
+  let gardenId: number
+  let response: any
 
-//   beforeAll(async () => {
-//     response = await callGraphQL({
-//       source: createGardenMutation,
-//       variableValues: { name },
-//       authorizationHeader: token,
-//     })
-//   })
+  beforeAll(async () => {
+    name = faker.commerce.productName()
+    gardenId = garden.id
 
-//   it('inserts a garden into the database', async () => {
-//     const garden = await Garden.findOne({ where: { name } })
-//     expect(garden).toBeTruthy()
-//   })
+    response = await callGraphQL({
+      source: createBedMutation,
+      variableValues: { gardenId, name },
+      authorizationHeader: token,
+    })
+  })
 
-//   it('returns its name after creation', async () => {
-//     expect(response).toMatchObject({
-//       data: {
-//         createGarden: {
-//           garden: {
-//             name,
-//           },
-//         },
-//       },
-//     })
-//   })
-// })
+  it('inserts a bed into the database', async () => {
+    const bed = await Bed.findOne({ where: { name } })
+    expect(bed).toBeTruthy()
+  })
+
+  it('returns its name after creation if one is passed', async () => {
+    expect(response).toMatchObject({
+      data: {
+        createBed: {
+          bed: {
+            name,
+          },
+        },
+      },
+    })
+  })
+})
