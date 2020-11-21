@@ -1,5 +1,7 @@
 export * from './callGraphQL'
 export * from './testConnection'
 export * from './createBedInDatabase'
+export * from './createGarden'
 export * from './createGardenInDatabase'
+export * from './createUser'
 export * from './createUserInDatabase'
