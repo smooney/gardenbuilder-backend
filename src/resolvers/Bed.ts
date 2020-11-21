@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Resolver, Query, Mutation, Arg, Int, Ctx } from 'type-graphql'
+import { Resolver, Query, Mutation, Arg, Int } from 'type-graphql'
 import { Bed, Garden } from '../entities'
-import { errorResponse, getUserIdFromRequest } from '../utils'
-import { Context, BedResponse, BedsResponse } from '../types'
+import { errorResponse } from '../utils'
+import { BedResponse, BedsResponse } from '../types'
 
 @Resolver()
 export class BedResolver {
@@ -16,7 +16,7 @@ export class BedResolver {
   }
 
   @Query(() => BedsResponse)
-  async beds(@Arg('gardenId') gardenId: number, @Ctx() { req }: Context) {
+  async beds(@Arg('gardenId') gardenId: number) {
     try {
       const garden: Garden | undefined = await Garden.findOne({
         where: { id: gardenId },
@@ -31,8 +31,8 @@ export class BedResolver {
   @Mutation(() => BedResponse)
   async createBed(
     @Arg('gardenId', () => Int) gardenId: number,
-    @Arg('name', () => String, { nullable: true }) name: string,
-    @Ctx() { req }: Context
+    @Arg('name', () => String, { nullable: true }) name: string
+    // @Ctx() { req }: Context
   ) {
     // TODO: Validate that garden belongs to owner
     // const ownerId = getUserIdFromRequest(req) as number
