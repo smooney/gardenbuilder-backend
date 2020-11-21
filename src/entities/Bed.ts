@@ -33,8 +33,13 @@ export class Bed extends BaseEntity {
   @Column()
   gardenId: number
 
+  // Cascade here means that if there is a Garden passed to bed,
+  // a new garden will be inserted
   @Field(() => Garden)
-  @ManyToOne(() => Garden, (garden) => garden.beds, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Garden, (garden) => garden.beds, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   garden: Garden
 
   @Field()
