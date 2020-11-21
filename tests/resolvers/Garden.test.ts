@@ -4,7 +4,7 @@ import jwt from '../../src/utils/jwt'
 import {
   callGraphQL,
   createGardenInDatabase,
-  createUserInDatabase,
+  createUser,
   testConnection,
 } from '../testUtils'
 import { Garden, User } from '../../src/entities'
@@ -16,9 +16,9 @@ let owner: User
 
 beforeAll(async () => {
   connection = await testConnection()
-  owner = await createUserInDatabase()
+  owner = createUser()
   garden = await createGardenInDatabase(owner, 'Default Garden')
-  token = jwt.assign(owner.id.toString())
+  token = jwt.assign(garden.ownerId.toString())
 })
 
 afterAll(async () => {

@@ -1,8 +1,8 @@
 import { Connection } from 'typeorm'
 import {
   createBedInDatabase,
-  createGardenInDatabase,
-  createUserInDatabase,
+  createGarden,
+  createUser,
   testConnection,
 } from '../testUtils'
 import { Bed, Garden, User } from '../../src/entities'
@@ -14,8 +14,8 @@ let bed: Bed
 
 beforeAll(async () => {
   connection = await testConnection()
-  owner = await createUserInDatabase()
-  garden = await createGardenInDatabase(owner)
+  owner = createUser()
+  garden = createGarden(owner)
   bed = await createBedInDatabase(garden)
 })
 
@@ -44,7 +44,7 @@ it('should have propery types of the expected type', () => {
   expect(typeof bed.name).toBe('string')
   expect(bed.endedAt instanceof Date).toBe(true)
   expect(typeof bed.isActive).toBe('boolean')
-  expect(bed.gardenId).toEqual(garden.id)
+  expect(Number.isInteger(bed.gardenId)).toBe(true)
   expect(bed.createdAt instanceof Date).toBe(true)
   expect(bed.updatedAt instanceof Date).toBe(true)
 })
