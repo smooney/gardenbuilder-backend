@@ -122,7 +122,7 @@ describe('the sections query', () => {
   })
 })
 
-describe.only('the createSection mutation', () => {
+describe('the createSection mutation', () => {
   let response: any
   let sectionValues: any
 
