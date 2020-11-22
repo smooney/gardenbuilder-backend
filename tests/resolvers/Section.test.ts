@@ -63,18 +63,22 @@ query Sections($bedId: Int!) {
 }
 `
 
-// const createBedMutation = `
-// mutation CreateBed($gardenId: Int!, $name: String) {
-//     createBed(gardenId: $gardenId, name: $name) {
-//       bed {
-//         name
-//       }
-//       errors {
-//         message
-//       }
-//     }
-//   }
-//   `
+const createSectionMutation = `
+mutation CreateSection($bedId: Int!, $xPosition: Int!, $yPosition: Int!, $plantType: String) {
+    createSection(bedId: $bedId, xPosition: $xPosition, yPosition: $yPosition, plantType: $plantType) {
+      section {
+        id
+        xPosition
+        yPosition
+        plantType
+        bedId
+      }
+      errors {
+        message
+      }
+    }
+  }
+`
 
 describe('the section query', () => {
   it('returns a section associated with a given id', async () => {
@@ -118,36 +122,37 @@ describe('the sections query', () => {
   })
 })
 
-// describe('the createBed mutation', () => {
-//   let name: string
-//   let gardenId: number
-//   let response: any
+describe.only('the createSection mutation', () => {
+  let response: any
+  let sectionValues: any
 
-//   beforeAll(async () => {
-//     name = faker.commerce.productName()
-//     gardenId = bed.gardenId
+  beforeAll(async () => {
+    sectionValues = {
+      bedId: section.bedId,
+      xPosition: section.xPosition + 1,
+      yPosition: section.yPosition,
+      plantType: 'Parsnip',
+    }
+    response = await callGraphQL({
+      source: createSectionMutation,
+      variableValues: sectionValues,
+      authorizationHeader: token,
+    })
+  })
 
-//     response = await callGraphQL({
-//       source: createBedMutation,
-//       variableValues: { gardenId, name },
-//       authorizationHeader: token,
-//     })
-//   })
+  it('inserts a section into the database', async () => {
+    const id = response?.data?.createSection.section.id
+    const section = await Section.findOne({ id })
+    expect(section).toBeTruthy()
+  })
 
-//   it('inserts a bed into the database', async () => {
-//     const bed = await Bed.findOne({ where: { name } })
-//     expect(bed).toBeTruthy()
-//   })
-
-//   it('returns its name after creation if one is passed', async () => {
-//     expect(response).toMatchObject({
-//       data: {
-//         createBed: {
-//           bed: {
-//             name,
-//           },
-//         },
-//       },
-//     })
-//   })
-// })
+  it('returns expected values for the newly-created section', async () => {
+    expect(response).toMatchObject({
+      data: {
+        createSection: {
+          section: sectionValues,
+        },
+      },
+    })
+  })
+})

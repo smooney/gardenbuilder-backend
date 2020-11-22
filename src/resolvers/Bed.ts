@@ -16,7 +16,7 @@ export class BedResolver {
   }
 
   @Query(() => BedsResponse)
-  async beds(@Arg('gardenId') gardenId: number) {
+  async beds(@Arg('gardenId', () => Int) gardenId: number) {
     try {
       const garden: Garden | undefined = await Garden.findOne({
         where: { id: gardenId },

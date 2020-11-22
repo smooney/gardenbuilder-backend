@@ -24,26 +24,29 @@ export class SectionResolver {
       return errorResponse(err.message)
     }
   }
-  // @Mutation(() => BedResponse)
-  // async createBed(
-  //   @Arg('gardenId', () => Int) gardenId: number,
-  //   @Arg('name', () => String, { nullable: true }) name: string
-  //   // @Ctx() { req }: Context
-  // ) {
-  //   // TODO: Validate that garden belongs to owner
-  //   // const ownerId = getUserIdFromRequest(req) as number
-  //   //  const owner = await User.findOne({ id: ownerId })
-  //   try {
-  //     const garden = await Garden.findOne({ id: gardenId })
-  //     const bed = Bed.create({
-  //       gardenId,
-  //       garden,
-  //       name,
-  //     })
-  //     await bed.save()
-  //     return { bed }
-  //   } catch (err) {
-  //     return errorResponse(err.message)
-  //   }
-  // }
+
+  @Mutation(() => SectionResponse)
+  async createSection(
+    @Arg('bedId', () => Int) bedId: number,
+    @Arg('xPosition', () => Int) xPosition: number,
+    @Arg('yPosition', () => Int) yPosition: number,
+    @Arg('plantType', () => String, { nullable: true }) plantType: string
+    // @Ctx() { req }: Context
+  ) {
+    // TODO: Validate that section belongs to owner
+    // const ownerId = getUserIdFromRequest(req) as number
+    //  const owner = await User.findOne({ id: ownerId })
+    try {
+      const section = Section.create({
+        bedId,
+        xPosition,
+        yPosition,
+        plantType,
+      })
+      await section.save()
+      return { section }
+    } catch (err) {
+      return errorResponse(err.message)
+    }
+  }
 }
