@@ -6,14 +6,15 @@ import { SectionResponse, SectionsResponse } from '../types'
 
 @Resolver()
 export class SectionResolver {
-  // @Query(() => BedResponse)
-  // async bed(@Arg('id', () => Int) id: number) {
-  //   const bed = await Bed.findOne(id)
-  //   if (!bed) {
-  //     return errorResponse('Bed not found')
-  //   }
-  //   return { bed }
-  // }
+  @Query(() => SectionResponse)
+  async section(@Arg('id', () => Int) id: number) {
+    const section = await Section.findOne(id)
+    if (!section) {
+      return errorResponse('Section not found')
+    }
+    return { section }
+  }
+
   @Query(() => SectionsResponse)
   async sections(@Arg('bedId', () => Int) bedId: number) {
     try {

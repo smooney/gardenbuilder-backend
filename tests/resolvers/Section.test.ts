@@ -31,18 +31,21 @@ afterAll(async () => {
   connection.close()
 })
 
-// const bedQuery = `
-// query Bed($id: Int!) {
-//     bed(id: $id) {
-//       bed {
-//         name
-//       }
-//       errors {
-//         message
-//       }
-//     }
-//   }
-//   `
+const sectionQuery = `
+query Section($id: Int!) {
+    section(id: $id) {
+      section {
+        id
+        xPosition
+        yPosition
+        plantType
+      }
+      errors {
+        message
+      }
+    }
+  }
+  `
 
 const sectionsQuery = `
 query Sections($bedId: Int!) {
@@ -73,26 +76,32 @@ query Sections($bedId: Int!) {
 //   }
 //   `
 
-// describe('the bed query', () => {
-//   it('returns the name of an existing bed', async () => {
-//     const response = await callGraphQL({
-//       source: bedQuery,
-//       variableValues: { id: bed.id },
-//       authorizationHeader: token,
-//     })
-//     expect(response?.data?.bed.bed.name).toBe(bed.name)
-//   })
+describe('the section query', () => {
+  it('returns a section associated with a given id', async () => {
+    const response = await callGraphQL({
+      source: sectionQuery,
+      variableValues: { id: section.id },
+      authorizationHeader: token,
+    })
 
-//   it('returns no beds if called with a nonexistent id', async () => {
-//     const FAKE_ID = 666
-//     const response = await callGraphQL({
-//       source: bedQuery,
-//       variableValues: { id: FAKE_ID },
-//       authorizationHeader: token,
-//     })
-//     expect(response?.data?.bed.bed).toBeNull()
-//   })
-// })
+    const selectedSection = response?.data?.section.section
+
+    expect(parseInt(selectedSection.id)).toBe(section.id)
+    expect(parseInt(selectedSection.xPosition)).toBe(section.xPosition)
+    expect(parseInt(selectedSection.yPosition)).toBe(section.yPosition)
+    expect(selectedSection.plantType).toBe(section.plantType)
+  })
+
+  it('returns no sections if called with a nonexistent id', async () => {
+    const FAKE_ID = 666
+    const response = await callGraphQL({
+      source: sectionQuery,
+      variableValues: { id: FAKE_ID },
+      authorizationHeader: token,
+    })
+    expect(response?.data?.section.section).toBeNull()
+  })
+})
 
 describe('the sections query', () => {
   it('returns a list of sections', async () => {
