@@ -11,7 +11,8 @@
     "start:dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "start:prod": "NODE_ENV=production node dist/index.js",
     "test": "npm run test:clear-database && jest",
-    "test:clear-database": "NODE_ENV=test ts-node ./tests/testUtils/clearTestDatabase.ts"
+    "test:clear-database": "NODE_ENV=test ts-node ./tests/testUtils/clearTestDatabase.ts",
+    "trefle": "NODE_ENV=development ts-node-dev src/utils/queryTrefle.ts"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
   "dependencies": {
     "apollo-server": "^2.18.2",
     "argon2": "^0.27.0",
+    "axios": "^0.21.0",
     "class-validator": "^0.12.2",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
