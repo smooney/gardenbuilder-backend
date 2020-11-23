@@ -1,4 +1,5 @@
 export * from './Bed'
 export * from './Garden'
+export * from './PlantOption'
 export * from './Section'
 export * from './User'
