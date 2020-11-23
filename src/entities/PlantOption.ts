@@ -1,4 +1,4 @@
-import { Field, ID, Int, ObjectType } from 'type-graphql'
+import { Field, ID, ObjectType } from 'type-graphql'
 import {
   Entity,
   BaseEntity,
@@ -6,7 +6,6 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
   OneToMany,
 } from 'typeorm'
 

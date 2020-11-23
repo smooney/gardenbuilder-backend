@@ -1,4 +1,3 @@
-import faker from 'faker'
 import { Connection } from 'typeorm'
 import jwt from '../../src/utils/jwt'
 import {

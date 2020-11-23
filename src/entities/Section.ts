@@ -7,7 +7,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToMany,
 } from 'typeorm'
 import { Bed } from './Bed'
 
