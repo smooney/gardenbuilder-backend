@@ -1,6 +1,6 @@
 import { Connection } from 'typeorm'
 import {
-  createBedInDatabase,
+  createBed,
   createGarden,
   createUser,
   testConnection,
@@ -16,7 +16,7 @@ beforeAll(async () => {
   connection = await testConnection()
   owner = createUser()
   garden = createGarden(owner)
-  bed = await createBedInDatabase(garden)
+  bed = await createBed(garden).save()
 })
 
 afterAll(async () => {

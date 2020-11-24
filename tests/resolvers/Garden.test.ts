@@ -3,7 +3,7 @@ import { Connection } from 'typeorm'
 import jwt from '../../src/utils/jwt'
 import {
   callGraphQL,
-  createGardenInDatabase,
+  createGarden,
   createUser,
   testConnection,
 } from '../testUtils'
@@ -17,7 +17,7 @@ let owner: User
 beforeAll(async () => {
   connection = await testConnection()
   owner = createUser()
-  garden = await createGardenInDatabase(owner, 'Default Garden')
+  garden = await createGarden(owner, 'Default Garden').save()
   token = jwt.assign(garden.ownerId.toString())
 })
 
