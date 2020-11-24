@@ -1,20 +1,19 @@
 require('dotenv/config')
+const { NODE_ENV } = process.env
 
 const database = {
-  development: 'gardenbuilder',
-  production: 'gardenbuilder',
+  development: 'main',
+  production: 'main',
   test: 'test',
 }
 
 const config = {
   type: 'postgres',
-  host: 'localhost',
+  host: process.env.CLOUD_DATABASE_HOST,
   port: 5432,
-  username: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
+  username: process.env.CLOUD_DATABASE_USER,
+  password: process.env.CLOUD_DATABASE_PASSWORD,
   database: database[process.env.NODE_ENV],
-  // dropSchema: process.env.NODE_ENV === 'test',
-  // entities: ['dist/**/*.entity{.ts,.js}'],
   entities: ['src/entities/*.[jt]s', 'modules/**/entities/*.[jt]s'],
   logging: process.env.NODE_ENV === 'development',
   migrationsTableName: 'migration',
