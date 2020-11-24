@@ -1,5 +1,13 @@
 require('dotenv/config')
-const { NODE_ENV } = process.env
+const {
+  NODE_ENV,
+  CLOUD_DATABASE_HOST,
+  CLOUD_DATABASE_PASSWORD,
+  CLOUD_DATABASE_USER,
+  LOCAL_DATABASE_HOST,
+  LOCAL_DATABASE_USER,
+  LOCAL_DATABASE_PASSWORD,
+} = process.env
 
 const database = {
   development: 'main',
@@ -9,10 +17,14 @@ const database = {
 
 const config = {
   type: 'postgres',
-  host: process.env.CLOUD_DATABASE_HOST,
+  host: NODE_ENV === 'production' ? CLOUD_DATABASE_HOST : LOCAL_DATABASE_HOST,
   port: 5432,
-  username: process.env.CLOUD_DATABASE_USER,
-  password: process.env.CLOUD_DATABASE_PASSWORD,
+  username:
+    NODE_ENV === 'production' ? CLOUD_DATABASE_USER : LOCAL_DATABASE_USER,
+  password:
+    NODE_ENV === 'production'
+      ? CLOUD_DATABASE_PASSWORD
+      : LOCAL_DATABASE_PASSWORD,
   database: database[process.env.NODE_ENV],
   entities: ['src/entities/*.[jt]s', 'modules/**/entities/*.[jt]s'],
   logging: process.env.NODE_ENV === 'development',
