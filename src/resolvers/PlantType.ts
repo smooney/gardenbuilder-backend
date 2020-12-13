@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Resolver, Query, Mutation, Arg, Int } from 'type-graphql'
-import { Bed, Garden, Section } from '../entities'
+import { Resolver, Query, Arg, Int } from 'type-graphql'
+import { Section } from '../entities'
 import { errorResponse } from '../utils'
-import { SectionResponse, SectionsResponse } from '../types'
+import { SectionResponse } from '../types'
 
 @Resolver()
 export class SectionResolver {

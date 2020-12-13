@@ -8,11 +8,13 @@
     "lint": "eslint . --ext .ts",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "start": "npm run start:dev",
-    "start:dev": "NODE_ENV=development ts-node-dev src/index.ts",
+    "start:dev": "NODE_ENV=development node dist/index.js",
     "start:prod": "NODE_ENV=production node dist/index.js",
-    "test": "npm run test:clear-database && jest",
+    "test": "npm run test:clear-database && jest --coverage",
+    "test:jest": "NODE_ENV=test jest",
     "test:clear-database": "NODE_ENV=test ts-node ./tests/testUtils/clearTestDatabase.ts",
-    "trefle": "NODE_ENV=development ts-node-dev src/utils/queryTrefle.ts"
+    "trefle": "NODE_ENV=development ts-node-dev src/utils/queryTrefle.ts",
+    "watch": "tsc -w"
   },
   "repository": {
     "type": "git",

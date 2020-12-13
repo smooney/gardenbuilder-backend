@@ -9,9 +9,8 @@ const PORT = 8000
 async function setupAndRunServer() {
   await createConnection()
   const schema = await createSchema()
-  const devMode = process.env.NODE_ENV === 'development'
   const server = new ApolloServer({
-    cors: devMode,
+    cors: process.env.NODE_ENV === 'development',
     schema,
     context: ({ req }: { req: RequestWithAuthenticationHeader }) => {
       return { req }

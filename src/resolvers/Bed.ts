@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Resolver, Query, Mutation, Arg, Int } from 'type-graphql'
-import { Bed, Garden } from '../entities'
+import { Bed } from '../entities/Bed'
+import { Garden } from '../entities/Garden'
 import { errorResponse } from '../utils'
 import { BedResponse, BedsResponse } from '../types'
 
