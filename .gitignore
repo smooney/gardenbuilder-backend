@@ -28,3 +28,6 @@ dist/
 
 # os metadata
 .DS_Store
+
+# coverage
+coverage/
