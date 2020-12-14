@@ -15,6 +15,8 @@ async function setupAndRunServer() {
     context: ({ req }: { req: RequestWithAuthenticationHeader }) => {
       return { req }
     },
+    playground: true, // must be set to see playground in production
+    introspection: true, // must be set for playground to connect to server in production
   })
 
   await server.listen(PORT)

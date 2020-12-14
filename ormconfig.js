@@ -27,9 +27,9 @@ const config = {
       ? CLOUD_DATABASE_PASSWORD
       : LOCAL_DATABASE_PASSWORD,
   database: database[process.env.NODE_ENV],
-  // entities: ['src/entities/*.[jt]s', 'modules/**/entities/*.[jt]s'],
-  entities: ['dist/entities/*.js', 'src/entities/*.ts', 'modules/**/entities/*.js'],
-  logging: process.env.NODE_ENV === 'development',
+  entities: ['dist/entities/*.js', 'modules/**/entities/*.js'],
+  logging: true,
+  // logging: process.env.NODE_ENV === 'development',
   migrationsTableName: 'migration',
   migrations: ['migration/*.js'],
   synchronize: true,
