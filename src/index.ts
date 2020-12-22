@@ -11,7 +11,6 @@ const PORT = process.env.PORT || 8080
 
 async function setupAndRunServer() {
   try {
-
     console.log(`Database connection is ${process.env.CLOUD_DATABASE_HOST}`)
 
     await createConnection()
