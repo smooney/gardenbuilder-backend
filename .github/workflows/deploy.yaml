@@ -16,11 +16,3 @@ jobs:
         APPLICATION_CREDENTIALS: ${{secrets.GCP_CREDENTIALS}}
       with:
         args: app deploy app.yaml
-  # build:
-  #   name: GAE Deploy
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
-  #       with:
-  #         credentials: ${{ secrets.GCP_CREDENTIALS }}
