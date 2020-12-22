@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: actions-hub/gcloud@master
+      - uses: actions-hub/gcloud@307.0.0
       env:
         PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
         APPLICATION_CREDENTIALS: ${{secrets.GCP_CREDENTIALS}}
