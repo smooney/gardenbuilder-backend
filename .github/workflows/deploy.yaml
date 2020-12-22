@@ -4,11 +4,22 @@ on:
     branches:
       - master
 jobs:
-  build:
-    name: GAE Deploy
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
-        with:
-          credentials: ${{ secrets.GCP_CREDENTIALS }}
+      - uses: actions/checkout@v1
+      - uses: actions-hub/gcloud@master
+      env:
+        PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
+        APPLICATION_CREDENTIALS: ${{secrets.GCP_CREDENTIALS}}
+      with:
+        args: app deploy app.yaml
+  # build:
+  #   name: GAE Deploy
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
+  #       with:
+  #         credentials: ${{ secrets.GCP_CREDENTIALS }}
