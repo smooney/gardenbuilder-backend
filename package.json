@@ -2,12 +2,16 @@
   "name": "gardenbuilder-api-typescript",
   "version": "1.0.0",
   "description": "API for Gardenbuilder",
-  "main": "index.js",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "scripts": {
     "build": "tsc",
+    "deploy": "gcloud app deploy",
     "lint": "eslint . --ext .ts",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "start": "npm run start:dev",
+    "gcp-build": "tsc",
+    "start": "node dist/index.js",
     "start:dev": "NODE_ENV=development node dist/index.js",
     "start:prod": "NODE_ENV=production node dist/index.js",
     "test": "npm run test:clear-database && jest --coverage",
@@ -34,6 +38,7 @@
   },
   "homepage": "https://github.com/gardenbuilder-app/gardenbuilder-backend-typescript#readme",
   "dependencies": {
+    "@google-cloud/debug-agent": "^5.1.3",
     "apollo-server": "^2.18.2",
     "argon2": "^0.27.0",
     "axios": "^0.21.0",

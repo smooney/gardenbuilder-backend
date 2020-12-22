@@ -16,6 +16,7 @@ tmp
 
 # secrets
 .env
+.gcloudSecret.json
 
 # editor
 .vscode
@@ -31,3 +32,6 @@ dist/
 
 # coverage
 coverage/
+
+# google cloud config
+app.yaml
