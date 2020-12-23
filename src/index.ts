@@ -11,8 +11,6 @@ const PORT = process.env.PORT || 8080
 
 async function setupAndRunServer() {
   try {
-    console.log(`Database connection is ${process.env.CLOUD_DATABASE_HOST}`)
-
     await createConnection()
     const schema = await createSchema()
     const server = new ApolloServer({
@@ -26,9 +24,9 @@ async function setupAndRunServer() {
     })
 
     await server.listen(PORT)
-    console.log(`Server has started on port ${PORT}`)
+    console.log(`Server has started on port ${PORT}`) // eslint-disable-line no-console
   } catch (err) {
-    console.log(err)
+    console.log(err) // eslint-disable-line no-console
   }
 }
 

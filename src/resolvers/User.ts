@@ -114,7 +114,6 @@ export class UserResolver {
       }
       return errorResponse('User does not exist')
     } catch (err) {
-      console.log(err)
       return errorResponse(err.message)
     }
 
