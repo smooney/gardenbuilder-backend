@@ -5,6 +5,9 @@
 -- Connect to DB
 \c main;
 
+-- Truncate table
+TRUNCATE TABLE plant_option;
+
 -- Insert
 INSERT INTO plant_option(
     common_name,
@@ -48,12 +51,12 @@ VALUES
 ('Zucchini', null, false, false, false, true),
 
 -- Fruits
-('Blueberries', null, false, false, true, true)
-('Cantaloupes', 'Muskmelons', false, false, true, true)
-('Strawberries', null, false, false, true, true)
+('Blueberries', null, false, false, true, true),
+('Cantaloupes', 'Muskmelons', false, false, true, true),
+('Strawberries', null, false, false, true, true),
 
 -- Herbs
-('Cilantro', 'Coriander', false, true, false, true)
-('Dill', null, false, true, false, true)
-('Parsley', null, false, true, false, true)
+('Cilantro', 'Coriander', false, true, false, true),
+('Dill', null, false, true, false, true),
+('Parsley', null, false, true, false, true),
 ('Sage', null, false, true, false, true)
