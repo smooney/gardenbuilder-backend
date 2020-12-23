@@ -23,10 +23,6 @@ export class PlantOption extends BaseEntity {
   @Column({ nullable: true })
   other_common_name: string
 
-  @Field(() => String)
-  @Column({ nullable: true })
-  type: string
-
   @Field(() => Boolean)
   @Column()
   is_vegetable: boolean

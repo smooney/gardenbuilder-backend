@@ -4,6 +4,7 @@ import {
   BedResolver,
   GardenResolver,
   HelloWorld,
+  PlantOptionsResolver,
   SectionResolver,
   UserResolver,
 } from '../resolvers'
@@ -14,6 +15,7 @@ export async function createSchema(): Promise<GraphQLSchema> {
       BedResolver,
       GardenResolver,
       HelloWorld,
+      PlantOptionsResolver,
       SectionResolver,
       UserResolver,
     ],
