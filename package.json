@@ -7,6 +7,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "database:seed": "psql postgres < ./seed/plant_options.sql",
     "deploy": "gcloud app deploy",
     "lint": "eslint . --ext .ts",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write",

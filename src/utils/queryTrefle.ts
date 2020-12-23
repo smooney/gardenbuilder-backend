@@ -17,7 +17,7 @@ export async function getPlantTypes() {
     )
     return plants
   } catch (err) {
-    // console.log(err)
+    console.log(err)
   }
 }
 

@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Resolver, Query, Arg, Int } from 'type-graphql'
-import { Section } from '../entities'
-import { errorResponse } from '../utils'
-import { SectionResponse } from '../types'
+// import { Resolver, Query } from 'type-graphql'
+// // import { PlantOption } from '../entities'
+// // import { errorResponse } from '../utils'
+// import { PlantsResponse } from '../types'
+// import { getPlantTypes } from '../utils/queryTrefle'
 
-@Resolver()
-export class SectionResolver {
-  @Query(() => SectionResponse)
-  async section(@Arg('id', () => Int) id: number) {
-    const section = await Section.findOne(id)
-    if (!section) {
-      return errorResponse('Section not found')
-    }
-    return { section }
-  }
-}
+// @Resolver()
+// export class PlantResolver {
+//   @Query(() => PlantsResponse)
+//   async plants()
+//     try {
+//       // const plants = await getPlantTypes()
+//     } catch (err) {
+
+//     }
+//   }
+// }

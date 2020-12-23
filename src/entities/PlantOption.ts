@@ -24,7 +24,7 @@ export class PlantOption extends BaseEntity {
   other_common_name: string
 
   @Field(() => String)
-  @Column()
+  @Column({ nullable: true })
   type: string
 
   @Field(() => Boolean)
