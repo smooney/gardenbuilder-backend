@@ -32,6 +32,3 @@ dist/
 
 # coverage
 coverage/
-
-# google cloud config
-app.yaml
