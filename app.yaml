@@ -1,1 +1,12 @@
 runtime: nodejs12
+
+env_variables:
+  CLOUD_DATABASE_HOST: /cloudsql/gardenbuilder-backend:us-central1:main
+  CLOUD_DATABASE_USER: dev
+  CLOUD_DATABASE_PASSWORD: "Who's a good boi?"
+  LOCAL_DATABASE_HOST: localhost
+  LOCAL_DATABASE_USER: dthompson
+  LOCAL_DATABASE_PASSWORD: Grafx12!
+  JWT_HASH_KEY: APercEnt_1_00UnguessableKE
+  TREFLE_ACCESS_TOKEN: OiKz6rUxJjDPq-lNzaNZ8BqkF0wCzuVeKw7eyyhvVlY
+  PORT: 8080

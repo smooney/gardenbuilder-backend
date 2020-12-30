@@ -2,20 +2,20 @@ import faker from 'faker'
 import { PlantOption } from '../../src/entities'
 
 export async function createPlantOptionInDatabase(
-  common_name: string = faker.lorem.word(),
-  other_common_name: string = faker.lorem.word(),
-  is_vegetable = true,
-  is_herb = false,
-  is_fruit = false,
-  is_common = false
+  commonName: string = faker.lorem.word(),
+  otherCommonName: string = faker.lorem.word(),
+  isVegetable = true,
+  isHerb = false,
+  isFruit = false,
+  isCommon = false
 ): Promise<PlantOption> {
   const plantOption = PlantOption.create({
-    common_name,
-    other_common_name,
-    is_vegetable,
-    is_herb,
-    is_fruit,
-    is_common,
+    commonName,
+    otherCommonName,
+    isVegetable,
+    isHerb,
+    isFruit,
+    isCommon,
   })
   return await plantOption.save()
 }

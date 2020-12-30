@@ -18,12 +18,12 @@ it('should have expected properties', () => {
   const keys = Object.keys(plantOption)
   const properties = [
     'id',
-    'common_name',
-    'other_common_name',
-    'is_vegetable',
-    'is_herb',
-    'is_fruit',
-    'is_common',
+    'commonName',
+    'otherCommonName',
+    'isVegetable',
+    'isHerb',
+    'isFruit',
+    'isCommon',
     'createdAt',
     'updatedAt',
   ]
@@ -34,9 +34,9 @@ it('should have expected properties', () => {
 
 it('should have propery types of the expected type', () => {
   expect(Number.isInteger(plantOption.id)).toBe(true)
-  expect(typeof plantOption.common_name).toBe('string')
-  expect(typeof plantOption.other_common_name).toBe('string')
-  expect(typeof plantOption.is_vegetable).toBe('boolean')
+  expect(typeof plantOption.commonName).toBe('string')
+  expect(typeof plantOption.otherCommonName).toBe('string')
+  expect(typeof plantOption.isVegetable).toBe('boolean')
   expect(plantOption.createdAt instanceof Date).toBe(true)
   expect(plantOption.updatedAt instanceof Date).toBe(true)
 })
