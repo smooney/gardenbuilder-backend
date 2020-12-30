@@ -10,12 +10,12 @@ TRUNCATE TABLE plant_option;
 
 -- Insert
 INSERT INTO plant_option(
-    common_name,
-    other_common_name,
-    is_vegetable,
-    is_herb,
-    is_fruit,
-    is_common
+    "commonName",
+    "otherCommonName",
+    "isVegetable",
+    "isHerb",
+    "isFruit",
+    "isCommon"
 )
 VALUES
 

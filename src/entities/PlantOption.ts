@@ -17,27 +17,27 @@ export class PlantOption extends BaseEntity {
 
   @Field(() => String)
   @Column()
-  common_name: string
+  commonName: string
 
   @Field(() => String)
   @Column({ nullable: true })
-  other_common_name: string
+  otherCommonName: string
 
   @Field(() => Boolean)
   @Column()
-  is_vegetable: boolean
+  isVegetable: boolean
 
   @Field(() => Boolean)
   @Column()
-  is_herb: boolean
+  isHerb: boolean
 
   @Field(() => Boolean)
   @Column()
-  is_fruit: boolean
+  isFruit: boolean
 
   @Field(() => Boolean)
   @Column()
-  is_common: boolean
+  isCommon: boolean
 
   // TODO: Add VarietyOption and link
   // @OneToMany(() => Plant, (bed) => bed.garden)
