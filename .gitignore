@@ -17,6 +17,7 @@ tmp
 # secrets
 .env
 .gcloudSecret.json
+app.yaml
 
 # editor
 .vscode

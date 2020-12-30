@@ -11,8 +11,6 @@
     "deploy": "gcloud app deploy",
     "lint": "eslint . --ext .ts",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "gcp-build": "tsc",
-    "prestart": "node getEnv",
     "start": "node dist/index.js",
     "start:dev": "NODE_ENV=development node dist/index.js",
     "start:prod": "NODE_ENV=production node dist/index.js",
