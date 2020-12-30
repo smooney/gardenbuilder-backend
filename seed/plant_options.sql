@@ -60,3 +60,27 @@ VALUES
 ('Dill', null, false, true, false, true),
 ('Parsley', null, false, true, false, true),
 ('Sage', null, false, true, false, true)
+;
+
+
+-- Connect to DB
+\c test;
+
+-- Truncate table
+TRUNCATE TABLE plant_option;
+
+INSERT INTO plant_option(
+    "commonName",
+    "otherCommonName",
+    "isVegetable",
+    "isHerb",
+    "isFruit",
+    "isCommon"
+)
+VALUES
+
+-- Mythical Fruits and Vegetables
+('Magic Beans', null, true, false, false, true),
+('Everlasting Gobstoppers', null, false, false, true, true),
+('Golden Apples', null, false, false, true, true)
+;
