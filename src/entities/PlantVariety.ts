@@ -10,7 +10,7 @@ import {
 
 @ObjectType()
 @Entity()
-export class Variety extends BaseEntity {
+export class PlantVariety extends BaseEntity {
   @Field(() => ID)
   @PrimaryColumn()
   id: number
