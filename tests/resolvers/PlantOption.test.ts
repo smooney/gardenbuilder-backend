@@ -1,8 +1,5 @@
 import { Connection } from 'typeorm'
-import {
-  callGraphQL,
-  testConnection,
-} from '../testUtils'
+import { callGraphQL, testConnection } from '../testUtils'
 
 let connection: Connection
 

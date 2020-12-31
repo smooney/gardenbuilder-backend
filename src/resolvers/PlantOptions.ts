@@ -2,9 +2,7 @@
 import { errorResponse } from '../utils'
 import { Resolver, Query } from 'type-graphql'
 import { PlantOption } from '../entities'
-// import { errorResponse } from '../utils'
 import { PlantOptionsResponse } from '../types'
-// import { getPlantTypes } from '../utils/queryTrefle'
 
 @Resolver()
 export class PlantOptionsResolver {
@@ -17,4 +15,14 @@ export class PlantOptionsResolver {
       return errorResponse(err.message)
     }
   }
+
+  // @Query(() => VarietiesResponse)
+  // async varieties(@Arg('species', () => String) species: string) {
+  //   try {
+  //     const varieties = await getVarieties(species)
+  //     return { varieties }
+  //   } catch (err) {
+  //     return errorResponse(err.message)
+  //   }
+  // }
 }
