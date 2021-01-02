@@ -1,8 +1,8 @@
 import axios from 'axios'
 import env from 'dotenv'
 import { Variety } from '../types'
-// import { getConnection } from 'typeorm'
-// import { PlantVariety } from '../entities/PlantVariety'
+import { getConnection, InsertResult } from 'typeorm'
+import { PlantVariety } from '../entities/PlantVariety'
 env.config()
 
 const { TREFLE_ACCESS_TOKEN } = process.env
@@ -48,16 +48,18 @@ export async function getVarieties(species: string) {
   }
 }
 
-// async function insertVarietiesIntoDatabase(varieties: Variety[]): Promise<void> {
-//   try {
-//     const result = await getConnection()
-//       .createQueryBuilder()
-//       .insert()
-//       .into(PlantVariety)
-//       .values(varieties)
-//       .execute()
-//     console.log(`Plant Varieties inserted in Database: ${result}`)
-//   } catch (err) {
-//     console.error(err)
-//   }
-// }
+export async function insertVarietiesIntoDatabase(
+  varieties: Variety[]
+): Promise<InsertResult | undefined> {
+  try {
+    return await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(PlantVariety)
+      .values(varieties)
+      .execute()
+  } catch (err) {
+    console.error(err)
+  }
+  return undefined
+}

@@ -1,4 +1,9 @@
-import { getPlantTypes, getVarieties } from '../../src/utils'
+import {
+  insertVarietiesIntoDatabase,
+  getPlantTypes,
+  getVarieties,
+} from '../../src/utils'
+import { createConnections, getConnection } from 'typeorm'
 
 type PlantType = {
   id: number
@@ -8,7 +13,13 @@ type PlantType = {
 let plantTypes: PlantType[]
 
 beforeAll(async () => {
+  await createConnections()
   plantTypes = await getPlantTypes()
+})
+
+afterAll(async () => {
+  const defaultConnection = getConnection('default')
+  await defaultConnection.close()
 })
 
 describe('getPlantTypes', () => {
@@ -29,5 +40,33 @@ describe('getVarieties', () => {
   it('retrieves at least one variety', async () => {
     const varieties = await getVarieties('bean')
     expect(varieties).toHaveLength(20)
+  })
+})
+
+describe('insertVarietiesIntoDatabase', () => {
+  const varieties = [
+    {
+      id: 6,
+      commonName: 'JuJu Bean',
+      slug: 'jujuBean',
+      scientificName: 'Lugumus Jujubus',
+      imageUrl: 'https://someaddress.com',
+      genus: 'Lugumus',
+      family: 'Vegetable',
+    },
+    {
+      id: 66,
+      commonName: 'Magic Bean',
+      slug: 'magicBean',
+      scientificName: 'Lugumus Magicus',
+      imageUrl: 'https://someaddress.com/magicBean',
+      genus: 'Lugumus',
+      family: 'Vegetable',
+    },
+  ]
+
+  it('inserts something into database', async () => {
+    await insertVarietiesIntoDatabase(varieties)
+    expect(true).toBe(true)
   })
 })
