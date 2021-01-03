@@ -28,7 +28,7 @@ export class PlantVariety extends BaseEntity {
   scientificName: string
 
   @Field(() => String)
-  @Column()
+  @Column({ nullable: true })
   imageUrl: string
 
   @Field(() => String)

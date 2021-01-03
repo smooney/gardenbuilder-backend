@@ -27,8 +27,9 @@ export async function getPlantTypes() {
 export async function getVarieties(species: string) {
   try {
     const result = await axios.get(
-      `https://trefle.io/api/v1/species/search?q=${species}&token=${TREFLE_ACCESS_TOKEN}`
+      `https://trefle.io/api/v1/species/search?q=${species}&filter_not[common_name]=null&token=${TREFLE_ACCESS_TOKEN}`
     )
+    console.log(result.data.data[0])
     const varieties = result.data.data.map(
       (item: any): Variety => {
         return {
