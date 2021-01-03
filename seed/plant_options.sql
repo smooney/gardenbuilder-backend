@@ -2,11 +2,11 @@
 * Insert plant type data in plant_type table 
 */
 
--- Connect to DB
 \c main;
 
 -- Truncate table
 TRUNCATE TABLE plant_option;
+ALTER SEQUENCE plant_option_id_seq RESTART WITH 1;
 
 -- Insert
 INSERT INTO plant_option(

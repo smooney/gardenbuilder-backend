@@ -4,7 +4,7 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 
@@ -12,32 +12,16 @@ import {
 @Entity()
 export class PlantVariety extends BaseEntity {
   @Field(() => ID)
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number
 
   @Field(() => String)
   @Column()
-  commonName: string
+  speciesId: string
 
   @Field(() => String)
   @Column()
-  slug: string
-
-  @Field(() => String)
-  @Column()
-  scientificName: string
-
-  @Field(() => String)
-  @Column({ nullable: true })
-  imageUrl: string
-
-  @Field(() => String)
-  @Column()
-  genus: string
-
-  @Field(() => String)
-  @Column()
-  family: string
+  variety: string
 
   @Field()
   @CreateDateColumn()

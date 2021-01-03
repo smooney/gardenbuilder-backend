@@ -12,7 +12,7 @@ export class VarietiesResolver {
       const varieties: Variety[] = await getVarieties(species)
       // TODO: Insert varieties into database
       insertVarietiesIntoDatabase(varieties)
-      
+
       return { varieties }
     } catch (err) {
       return errorResponse(err.message)
