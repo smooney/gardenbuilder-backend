@@ -9,15 +9,16 @@ TRUNCATE TABLE species;
 ALTER SEQUENCE species_id_seq RESTART WITH 1;
 
 -- Insert
-INSERT INTO plant_option(
+INSERT INTO species(
     "commonName",
+    "pluralName",
     "otherCommonName",
     "isVegetable",
     "isHerb",
     "isFruit",
     "isCommon",
     "slug",
-    "scientificName",
+    "scientificName"
 )
 VALUES
 
@@ -59,11 +60,11 @@ VALUES
 ('cilantro', 'cilantro', 'coriander', false, true, false, true, 'cilantro', 'Coriandrum sativum'),
 ('dill', 'dill', null, false, true, false, true, 'dill', 'Anethum graveolens'),
 ('fennel', 'fennel', null, false, true, false, true, 'fennel', 'Foeniculum vulgare'),
-('parsley', 'parsley' null, false, true, false, true, 'parsley', 'Petroselinum crispum'),
-('sage', 'sage', null, false, true, false, true, 'sage', 'Salvia officinalis')
+('parsley', 'parsley', null, false, true, false, true, 'parsley', 'Petroselinum crispum'),
+('sage', 'sage', null, false, true, false, true, 'sage', 'Salvia officinalis'),
 
 -- Companion plants
-('sunflower', 'sunflowers' null, false, false, false, true, 'sunflower', 'Helianthus annuus'),
+('sunflower', 'sunflowers', null, false, false, false, true, 'sunflower', 'Helianthus annuus')
 ;
 
 
@@ -81,7 +82,7 @@ INSERT INTO species(
     "isHerb",
     "isFruit",
     "isCommon",
-    "stub",
+    "slug",
     "scientificName"
 )
 VALUES
