@@ -7,10 +7,10 @@ import { SpeciesResponse } from '../types'
 @Resolver()
 export class SpeciesResolver {
   @Query(() => SpeciesResponse)
-  async plantOptions() {
+  async species() {
     try {
-      const species = await Species.find()
-      return { species }
+      const aSpecies = await Species.find()
+      return { species: aSpecies }
     } catch (err) {
       return errorResponse(err.message)
     }

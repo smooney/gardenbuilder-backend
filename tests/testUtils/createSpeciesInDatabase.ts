@@ -23,7 +23,7 @@ export async function createSpeciesInDatabase(
     isFruit,
     isCommon,
     slug,
-    scientificName
+    scientificName,
   })
   return await species.save()
 }
