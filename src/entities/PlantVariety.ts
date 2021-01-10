@@ -16,11 +16,11 @@ export class PlantVariety extends BaseEntity {
   id: number
 
   @Field(() => String)
-  @Column()
+  @Column({ nullable: true })
   speciesId: string
 
   @Field(() => String)
-  @Column()
+  @Column({ nullable: true })
   variety: string
 
   @Field()

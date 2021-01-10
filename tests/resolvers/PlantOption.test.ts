@@ -25,7 +25,7 @@ query {
   }
   `
 
-describe('the PlantOptions query', () => {
+describe.skip('the PlantOptions query', () => {
   it('returns some plant options', async () => {
     const response = await callGraphQL({
       source: plantOptionsQuery,
