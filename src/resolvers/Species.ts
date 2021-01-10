@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { errorResponse } from '../utils'
 import { Resolver, Query } from 'type-graphql'
-import { PlantOption } from '../entities'
-import { PlantOptionsResponse } from '../types'
+import { Species } from '../entities'
+import { SpeciesResponse } from '../types'
 
 @Resolver()
-export class PlantOptionsResolver {
-  @Query(() => PlantOptionsResponse)
+export class SpeciesResolver {
+  @Query(() => SpeciesResponse)
   async plantOptions() {
     try {
-      const plantOptions = await PlantOption.find()
-      return { plantOptions }
+      const species = await Species.find()
+      return { species }
     } catch (err) {
       return errorResponse(err.message)
     }

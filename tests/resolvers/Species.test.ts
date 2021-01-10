@@ -11,10 +11,10 @@ afterAll(async () => {
   connection.close()
 })
 
-const plantOptionsQuery = `
+const speciesQuery = `
 query {
-    plantOptions {
-      plantOptions {
+    species {
+      species {
         commonName
         id
       }
@@ -28,12 +28,12 @@ query {
 describe.skip('the PlantOptions query', () => {
   it('returns some plant options', async () => {
     const response = await callGraphQL({
-      source: plantOptionsQuery,
+      source: speciesQuery,
       variableValues: {},
     })
 
-    const plantOptions = response?.data?.plantOptions.plantOptions
+    const speciesResults = response?.data?.species.species
 
-    expect(plantOptions.length).toBeGreaterThan(0)
+    expect(speciesResults.length).toBeGreaterThan(0)
   })
 })
