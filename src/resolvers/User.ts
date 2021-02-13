@@ -111,6 +111,7 @@ export class UserResolver {
         if (token) {
           return { user, token }
         }
+        return errorResponse('Invalid password')
       }
       return errorResponse('User does not exist')
     } catch (err) {
