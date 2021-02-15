@@ -1,6 +1,6 @@
 /**
 * Insert data for a test user into db 
-* Test user id is 12
+* Test user id is 18
 */
 
 \c main;
@@ -12,7 +12,7 @@ INSERT INTO garden(
     "ownerId"
 )
 VALUES
-('Garden One', true, 12),
-('Garden Two', true, 12),
+('Garden One', true, 18),
+('Garden Two', true, 18),
 ('Garden One', true, 1),
 ('Garden Two', true, 1);
