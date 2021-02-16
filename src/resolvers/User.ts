@@ -15,7 +15,7 @@ import { Response } from '../types/Response'
 import { errorResponse } from '../utils/errorResponse'
 import jwt from '../utils/jwt'
 import { Context } from '../types/Context'
-import { getUserIdFromRequest } from '../utils/getUserIdFromRequest'
+import { getTokenIfPasswordIsValid, getUserIdFromRequest } from '../utils'
 
 @ObjectType()
 class UserResponse extends Response {
@@ -107,7 +107,7 @@ export class UserResolver {
         where: { email },
       })
       if (user) {
-        const token = await getTokenIfPasswordIsValid(user)
+        const token = await getTokenIfPasswordIsValid(user, password)
         if (token) {
           return { user, token }
         }
@@ -116,14 +116,6 @@ export class UserResolver {
       return errorResponse('User does not exist')
     } catch (err) {
       return errorResponse(err.message)
-    }
-
-    async function getTokenIfPasswordIsValid(
-      user: User
-    ): Promise<string | null> {
-      const passwordIsValid = await argon2.verify(user?.password, password)
-      const token = jwt.assign(user.id.toString())
-      return passwordIsValid ? token : null
     }
   }
 }
