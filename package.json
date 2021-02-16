@@ -14,7 +14,7 @@
     "start": "node dist/index.js",
     "start:dev": "NODE_ENV=development nodemon dist/index.js",
     "start:prod": "NODE_ENV=production node dist/index.js",
-    "test": "npm run test:clear-database && jest --coverage",
+    "test": "npm run test:clear-database && jest",
     "test:jest": "NODE_ENV=test jest",
     "test:clear-database": "NODE_ENV=test ts-node ./tests/testUtils/clearTestDatabase.ts",
     "trefle": "NODE_ENV=development ts-node-dev src/utils/queryTrefle.ts",
