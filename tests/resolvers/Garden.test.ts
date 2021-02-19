@@ -1,6 +1,7 @@
 import faker from 'faker'
 import { Connection } from 'typeorm'
 import jwt from '../../src/utils/jwt'
+import { createAuthorizationHeaderString } from '../../src/utils'
 import {
   callGraphQL,
   createGarden,
@@ -18,7 +19,7 @@ beforeAll(async () => {
   connection = await testConnection()
   owner = createUser()
   garden = await createGarden(owner, 'Default Garden').save()
-  token = jwt.assign(garden.ownerId.toString())
+  token = createAuthorizationHeaderString(jwt.assign(garden.ownerId.toString()))
 })
 
 afterAll(async () => {
@@ -95,6 +96,7 @@ describe('the createGarden mutation', () => {
       variableValues: { name },
       authorizationHeader: token,
     })
+    console.log(JSON.stringify(response, undefined, 2))
   })
 
   it('inserts a garden into the database', async () => {
