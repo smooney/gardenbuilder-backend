@@ -43,7 +43,8 @@ export class Garden extends BaseEntity {
   })
   owner: User
 
-  @OneToMany(() => Bed, (bed) => bed.garden)
+  @Field(() => [Bed])
+  @OneToMany(() => Bed, (bed) => bed.garden, { eager: true })
   beds: Bed[]
 
   @Field()
