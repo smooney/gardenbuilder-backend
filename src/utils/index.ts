@@ -1,3 +1,4 @@
+export * from './createAuthorizationHeaderString'
 export * from './createSchema'
 export * from './errorResponse'
 export * from './getUserIdFromRequest'
