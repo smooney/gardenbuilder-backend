@@ -19,10 +19,11 @@ export class GardenResolver {
   }
 
   @Query(() => GardensResponse)
-  gardens(@Ctx() { req }: Context) {
+  async gardens(@Ctx() { req }: Context) {
     try {
       const ownerId = getUserIdFromRequest(req)
-      const gardens = Garden.find({ where: { ownerId } })
+      const gardens = await Garden.find({ where: { ownerId } })
+      console.log({ gardens })
       return { gardens }
     } catch (err) {
       return errorResponse(err.message)
