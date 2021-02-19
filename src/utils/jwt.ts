@@ -16,8 +16,8 @@ export function verify(token: string): boolean {
 }
 
 export function getUserId(token: string): number {
-    const { userId } = jwt.verify(token, jwtKey) as any
-    return parseInt(userId)
+  const { userId } = jwt.verify(token, jwtKey) as any
+  return parseInt(userId)
 }
 
 export default { assign, verify, getUserId }
