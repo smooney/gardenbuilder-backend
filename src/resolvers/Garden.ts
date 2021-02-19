@@ -31,8 +31,8 @@ export class GardenResolver {
 
   @Mutation(() => GardenResponse)
   async createGarden(@Arg('name') name: string, @Ctx() { req }: Context) {
-    const ownerId = getUserIdFromRequest(req) as number
     try {
+      const ownerId = getUserIdFromRequest(req) as number
       const owner = await User.findOne({ id: ownerId })
       const garden = Garden.create({
         name,
