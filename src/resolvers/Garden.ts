@@ -23,7 +23,6 @@ export class GardenResolver {
     try {
       const ownerId = getUserIdFromRequest(req)
       const gardens = await Garden.find({ where: { ownerId } })
-      console.log({ gardens })
       return { gardens }
     } catch (err) {
       return errorResponse(err.message)
