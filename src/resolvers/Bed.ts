@@ -32,14 +32,16 @@ export class BedResolver {
   @Mutation(() => BedResponse)
   async createBed(
     @Arg('gardenId', () => Int) gardenId: number,
-    @Arg('name', () => String, { nullable: true }) name: string
+    @Arg('name', () => String) name: string
     // @Ctx() { req }: Context
   ) {
     // TODO: Validate that garden belongs to owner
     // const ownerId = getUserIdFromRequest(req) as number
     //  const owner = await User.findOne({ id: ownerId })
     try {
+      console.log('in createBed')
       const garden = await Garden.findOne({ id: gardenId })
+      console.log('garden is', garden)
       const bed = Bed.create({
         gardenId,
         garden,

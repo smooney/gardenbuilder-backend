@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Resolver, Query, Mutation, Arg, Int, Ctx } from 'type-graphql'
 import { Garden } from '../entities/Garden'
-import { errorResponse } from '../utils/errorResponse'
 import { Context } from '../types/Context'
 import { getUserIdFromRequest } from '../utils/getUserIdFromRequest'
 import { User } from '../entities/User'

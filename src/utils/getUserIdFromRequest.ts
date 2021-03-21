@@ -6,10 +6,7 @@ export function getUserIdFromRequest(
 ): number | null {
   const token = req?.headers?.authorization?.split(' ')[1]
   if (token) {
-    console.log(`about to get userId`)
-    const userId = jwt.getUserId(token)
-    console.log(userId)
-    return userId
+    return jwt.getUserId(token)
   }
   return null
 }

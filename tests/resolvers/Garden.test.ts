@@ -29,41 +29,26 @@ afterAll(async () => {
 const gardenQuery = `
 query Garden($id: Int!) {
     garden(id: $id) {
-      garden {
         name
-      }
-      errors {
-        message
-      }
     }
-  }
-  `
+}
+`
 
 const gardensQuery = `
 query Gardens {
     gardens {
-      gardens {
-        name
-      }
-      errors {
-        message
-      }
+      name
     }
-  }
-  `
+}
+`
 
 const createGardenMutation = `
 mutation CreateGarden($name: String!) {
     createGarden(name: $name) {
-      garden {
-        name
-      }
-      errors {
-        message
-      }
+      name
     }
-  }
-  `
+}
+`
 
 describe('the garden query', () => {
   it('returns the name of an existing garden', async () => {
@@ -72,7 +57,7 @@ describe('the garden query', () => {
       variableValues: { id: garden.id },
       authorizationHeader: token,
     })
-    expect(response?.data?.garden.garden.name).toBe('Default Garden')
+    expect(response?.data?.garden.name).toBe('Default Garden')
   })
 })
 
@@ -82,7 +67,7 @@ describe('the gardens query', () => {
       source: gardensQuery,
       authorizationHeader: token,
     })
-    expect(response?.data?.gardens.gardens.includes({ name: 'Default Garden' }))
+    expect(response?.data?.gardens.includes({ name: 'Default Garden' }))
   })
 })
 
@@ -96,7 +81,6 @@ describe('the createGarden mutation', () => {
       variableValues: { name },
       authorizationHeader: token,
     })
-    console.log(JSON.stringify(response, undefined, 2))
   })
 
   it('inserts a garden into the database', async () => {
@@ -108,9 +92,7 @@ describe('the createGarden mutation', () => {
     expect(response).toMatchObject({
       data: {
         createGarden: {
-          garden: {
-            name,
-          },
+          name,
         },
       },
     })
