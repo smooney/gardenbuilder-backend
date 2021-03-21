@@ -30,42 +30,27 @@ afterAll(async () => {
 
 const bedQuery = `
 query Bed($id: Int!) {
-    bed(id: $id) {
-      bed {
-        name
-      }
-      errors {
-        message
-      }
-    }
+  bed(id: $id) {
+    name
   }
-  `
+}
+`
 
 const bedsQuery = `
 query Beds {
-    beds {
-      beds {
-        name
-      }
-      errors {
-        message
-      }
-    }
+  beds {
+    name
   }
-  `
+}
+`
 
 const createBedMutation = `
-mutation CreateBed($gardenId: Int!, $name: String) {
-    createBed(gardenId: $gardenId, name: $name) {
-      bed {
-        name
-      }
-      errors {
-        message
-      }
-    }
+mutation CreateBed($gardenId: Int!, $name: String!) {
+  createBed(gardenId: $gardenId, name: $name) {
+    name
   }
-  `
+}
+`
 
 describe('the bed query', () => {
   it('returns the name of an existing bed', async () => {
@@ -74,7 +59,7 @@ describe('the bed query', () => {
       variableValues: { id: bed.id },
       authorizationHeader: token,
     })
-    expect(response?.data?.bed.bed.name).toBe(bed.name)
+    expect(response?.data?.bed.name).toBe(bed.name)
   })
 
   it('returns no beds if called with a nonexistent id', async () => {
@@ -84,7 +69,7 @@ describe('the bed query', () => {
       variableValues: { id: FAKE_ID },
       authorizationHeader: token,
     })
-    expect(response?.data?.bed.bed).toBeNull()
+    expect(response?.data?.bed).toBeFalsy()
   })
 })
 
@@ -94,7 +79,7 @@ describe('the beds query', () => {
       source: bedsQuery,
       authorizationHeader: token,
     })
-    expect(response?.data?.beds.beds.includes({ name: bed.name }))
+    expect(response?.data?.beds.includes({ name: bed.name }))
   })
 })
 
@@ -123,9 +108,7 @@ describe('the createBed mutation', () => {
     expect(response).toMatchObject({
       data: {
         createBed: {
-          bed: {
-            name,
-          },
+          name,
         },
       },
     })

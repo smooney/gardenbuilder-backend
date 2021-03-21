@@ -1,5 +1,3 @@
-export * from './BedResponse'
-export * from './BedsResponse'
 export * from './Context'
 export * from './Error'
 export * from './RequestWithAuthenticationHeader'
