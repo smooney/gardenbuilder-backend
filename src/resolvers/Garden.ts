@@ -4,32 +4,28 @@ import { Garden } from '../entities/Garden'
 import { errorResponse } from '../utils/errorResponse'
 import { Context } from '../types/Context'
 import { getUserIdFromRequest } from '../utils/getUserIdFromRequest'
-import { GardenResponse, GardensResponse } from '../types'
 import { User } from '../entities/User'
+import { ApolloError } from 'apollo-server'
 
 @Resolver()
 export class GardenResolver {
-  @Query(() => GardenResponse)
+  @Query(() => Garden)
   async garden(@Arg('id', () => Int) id: number) {
-    const garden = await Garden.findOne(id)
-    if (!garden) {
-      return errorResponse('Garden not found')
-    }
-    return { garden }
+    return await Garden.findOne(id)
   }
 
-  @Query(() => GardensResponse)
+  @Query(() => [Garden])
   async gardens(@Ctx() { req }: Context) {
     try {
       const ownerId = getUserIdFromRequest(req)
       const gardens = await Garden.find({ where: { ownerId } })
-      return { gardens }
+      return gardens
     } catch (err) {
-      return errorResponse(err.message)
+      throw new ApolloError(err.message)
     }
   }
 
-  @Mutation(() => GardenResponse)
+  @Mutation(() => Garden)
   async createGarden(@Arg('name') name: string, @Ctx() { req }: Context) {
     try {
       const ownerId = getUserIdFromRequest(req) as number
@@ -38,10 +34,10 @@ export class GardenResolver {
         name,
         owner,
       })
-      await garden.save()
-      return { garden }
+      const response = await garden.save()
+      return response
     } catch (err) {
-      return errorResponse(err.message)
+      throw new ApolloError(err.message)
     }
   }
 }
