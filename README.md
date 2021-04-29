@@ -20,12 +20,12 @@ Finally, you'll need to add the following into the `.env` file at the root of th
 LOCAL_DATABASE_HOST=localhost
 LOCAL_DATABASE_USER=yourUserName
 LOCAL_DATABASE_PASSWORD=yourPassword
-PORT=8080
+PORT=8000
 ```
 
 ### To Run
 
-TODO: Add start instructions here
+At project root, type `npm run start:dev`. This will start the API. You'll want to open up a second terminal at root and type `npm run watch` so that your code changes are compiled from typescript to javascript as you save them. 
 
 Then navigate to [localhost:8000/graphql](http://localhost:8000/graphql).
 You should see the graphiQL editor and be able to write queries like
