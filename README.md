@@ -17,15 +17,10 @@ Alternatively, you could run postgresql locally using docker: `docker run -e POS
 Finally, you'll need to add the following into the `.env` file at the root of the project:
 
 ```
-TYPEORM_CONNECTION = postgres
-TYPEORM_HOST = localhost
-TYPEORM_USERNAME = yourUserName
-TYPEORM_PASSWORD = yourPassword
-TYPEORM_DATABASE = yourDatabaseName
-TYPEORM_PORT = 5432
-TYPEORM_SYNCHRONIZE = true
-TYPEORM_LOGGING = true
-TYPEORM_ENTITIES = entities/*.[jt]s,modules/**/entities/*.[jt]
+LOCAL_DATABASE_HOST=localhost
+LOCAL_DATABASE_USER=yourUserName
+LOCAL_DATABASE_PASSWORD=yourPassword
+PORT=8080
 ```
 
 ### To Run
