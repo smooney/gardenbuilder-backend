@@ -40,13 +40,8 @@ query {
 
 ### To Run Tests
 
-TODO: Add test instructions
+Run `npm test` or `npm run test`. Tests also automatically run each time you try to make a `git commit`
 
 ## Contributing
 
-For Contributing, Read our [Contribution Guidelines](https://github.com/gardenbuilder/gardenbuilder-backend-typescript/blob/master/CONTRIBUTING.md#contributing)
-
-
-## Contact
-
-Questions? Feel free to contact Dave at `capndavet@gmail.com`.
+To Contribute, read our [Contribution Guidelines](https://github.com/gardenbuilder/gardenbuilder-backend-typescript/blob/master/CONTRIBUTING.md#contributing)
