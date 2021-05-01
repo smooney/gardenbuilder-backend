@@ -44,6 +44,18 @@ export class Bed extends BaseEntity {
   })
   garden: Garden
 
+  @Field(() => Int)
+  @Column({ default: 0 })
+  height: number
+
+  @Field(() => Int)
+  @Column({ default: 0 })
+  width: number
+
+  @Field()
+  @Column({ default: 'feet' })
+  measurement: string
+
   @OneToMany(() => Section, (section) => section.bed)
   sections: Section[]
 

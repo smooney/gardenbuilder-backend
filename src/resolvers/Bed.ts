@@ -11,7 +11,7 @@ export class BedResolver {
     return await Bed.findOne(id)
   }
 
-  @Query(() => [Bed])
+  @Query(() => [Bed], { nullable: true })
   async beds(@Arg('gardenId', () => Int) gardenId: number) {
     const garden: Garden | undefined = await Garden.findOne({
       where: { id: gardenId },
@@ -30,9 +30,7 @@ export class BedResolver {
     // const ownerId = getUserIdFromRequest(req) as number
     //  const owner = await User.findOne({ id: ownerId })
     try {
-      console.log('in createBed')
       const garden = await Garden.findOne({ id: gardenId })
-      console.log('garden is', garden)
       const bed = Bed.create({
         gardenId,
         garden,
