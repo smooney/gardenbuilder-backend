@@ -27,6 +27,7 @@ Finally, you'll need to add the following into the `.env` file at the root of th
 LOCAL_DATABASE_HOST=localhost
 LOCAL_DATABASE_USER=yourUserName
 LOCAL_DATABASE_PASSWORD=yourPassword
+JWT_HASH_KEY=key
 PORT=8000
 ```
 
