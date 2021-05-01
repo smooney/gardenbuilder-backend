@@ -17,7 +17,6 @@
     "test": "npm run test:clear-database && jest",
     "test:jest": "NODE_ENV=test jest",
     "test:clear-database": "NODE_ENV=test ts-node ./tests/testUtils/clearTestDatabase.ts",
-    "trefle": "NODE_ENV=development ts-node-dev src/utils/queryTrefle.ts",
     "watch": "tsc -w"
   },
   "repository": {
