@@ -1,8 +1,31 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { ApolloError } from 'apollo-server'
-import { Resolver, Query, Mutation, Arg, Int } from 'type-graphql'
+import {
+  Arg,
+  Resolver,
+  Query,
+  Mutation,
+  Int,
+  InputType,
+  Field,
+} from 'type-graphql'
 import { Bed } from '../entities/Bed'
 import { Garden } from '../entities/Garden'
+
+@InputType()
+class UpdateBedDimensionsInput implements Partial<Bed> {
+  @Field()
+  id: number
+
+  @Field(() => Int, { nullable: true })
+  length?: number
+
+  @Field(() => Int, { nullable: true })
+  width?: number
+
+  @Field({ nullable: true })
+  unitOfMeasurement?: string
+}
 
 @Resolver()
 export class BedResolver {
@@ -40,5 +63,31 @@ export class BedResolver {
     } catch (err) {
       throw new ApolloError(err.message)
     }
+  }
+
+  @Mutation(() => Bed)
+  async updateBedDimensions(
+    // @Ctx() { req }: Context,
+    @Arg('input') input: UpdateBedDimensionsInput
+  ) {
+    const bed = await Bed.findOne({ id: input.id })
+
+    // TODO: validate bed belongs to user
+    // const ownerId = getUserIdFromRequest(req) as number
+    // const garden = await Garden.findOne({ id: bed?.gardenId })
+    // if (ownerId !== garden?.ownerId) {
+    //   throw new ApolloError('Bed does not belong to this user')
+    // }
+    if (input.length && bed) {
+      bed.length = input.length
+    }
+    if (input.width && bed) {
+      bed.width = input.width
+    }
+    if (input.unitOfMeasurement && bed) {
+      bed.unitOfMeasurement = input.unitOfMeasurement
+    }
+
+    return await bed?.save()
   }
 }

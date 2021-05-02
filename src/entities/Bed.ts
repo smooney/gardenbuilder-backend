@@ -46,7 +46,7 @@ export class Bed extends BaseEntity {
 
   @Field(() => Int)
   @Column({ default: 0 })
-  height: number
+  length: number
 
   @Field(() => Int)
   @Column({ default: 0 })

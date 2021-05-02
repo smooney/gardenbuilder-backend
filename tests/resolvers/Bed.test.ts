@@ -52,6 +52,17 @@ mutation CreateBed($gardenId: Int!, $name: String!) {
 }
 `
 
+const updateBedDimensionsMutation = `
+mutation updateBedDimensions($input: UpdateBedDimensionsInput!) {
+  updateBedDimensions(input: $input) {
+    id
+    length
+    width
+    unitOfMeasurement
+  }
+}
+`
+
 describe('the bed query', () => {
   it('returns the name of an existing bed', async () => {
     const response = await callGraphQL({
@@ -112,5 +123,38 @@ describe('the createBed mutation', () => {
         },
       },
     })
+  })
+})
+
+describe.only('the updateBedDimensions mutation', () => {
+  it('updates a bed in the database', async () => {
+    const length = 3
+    const width = 3
+    const unitOfMeasurement = 'cm'
+    const bedId = bed.id
+
+    const response = await callGraphQL({
+      source: updateBedDimensionsMutation,
+      variableValues: {
+        input: {
+          id: bedId,
+          length,
+          width,
+          unitOfMeasurement: 'cm',
+        },
+      },
+      authorizationHeader: token,
+    })
+
+    const updatedBed = await Bed.findOne({ where: { id: bedId } })
+
+    expect(updatedBed?.width).toEqual(width)
+    expect(updatedBed?.length).toEqual(length)
+    expect(updatedBed?.unitOfMeasurement).toEqual(unitOfMeasurement)
+    expect(response?.data?.updateBedDimensions.width).toEqual(width)
+    expect(response?.data?.updateBedDimensions.length).toEqual(length)
+    expect(response?.data?.updateBedDimensions.unitOfMeasurement).toEqual(
+      unitOfMeasurement
+    )
   })
 })
