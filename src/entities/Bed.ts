@@ -54,7 +54,7 @@ export class Bed extends BaseEntity {
 
   @Field()
   @Column({ default: 'feet' })
-  measurement: string
+  unitOfMeasurement: string
 
   @OneToMany(() => Section, (section) => section.bed)
   sections: Section[]

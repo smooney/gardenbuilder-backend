@@ -33,7 +33,7 @@ it('should have expected properties', () => {
     'gardenId',
     'height',
     'width',
-    'measurement',
+    'unitOfMeasurement',
     'createdAt',
     'updatedAt',
   ]
@@ -52,5 +52,5 @@ it('should have propery types of the expected type', () => {
   expect(bed.updatedAt instanceof Date).toBe(true)
   expect(Number.isInteger(bed.width)).toBe(true)
   expect(Number.isInteger(bed.height)).toBe(true)
-  expect(typeof bed.measurement).toBe('string')
+  expect(typeof bed.unitOfMeasurement).toBe('string')
 })
