@@ -34,9 +34,7 @@ export class BedResolver {
     // const ownerId = getUserIdFromRequest(req) as number
     //  const owner = await User.findOne({ id: ownerId })
     try {
-      console.log('in createBed')
       const garden = await Garden.findOne({ id: gardenId })
-      console.log('garden is', garden)
       const bed = Bed.create({
         gardenId,
         garden,
