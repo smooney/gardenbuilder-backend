@@ -24,6 +24,18 @@ export class Bed extends BaseEntity {
   name: string
 
   @Field()
+  @Column()
+  height: number
+
+  @Field()
+  @Column()
+  width: number
+
+  @Field()
+  @Column()
+  unitOfMeasurement: string
+
+  @Field()
   @UpdateDateColumn()
   endedAt: Date
 
