@@ -24,7 +24,7 @@ export class BedResolver {
   async createBed(
     @Arg('gardenId', () => Int) gardenId: number,
     @Arg('name', () => String) name: string,
-    @Arg('height', () => Int) height: number,
+    @Arg('length', () => Int) length: number,
     @Arg('width', () => Int) width: number,
     @Arg('unitOfMeasurement', () => String) unitOfMeasurement: string
 
@@ -39,7 +39,7 @@ export class BedResolver {
         gardenId,
         garden,
         name,
-        height,
+        length,
         width,
         unitOfMeasurement,
       })

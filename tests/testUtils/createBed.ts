@@ -5,14 +5,14 @@ export function createBed(
   garden: Garden,
   name: string = faker.commerce.productName(),
   width = 4,
-  height = 4,
+  length = 4,
   unitOfMeasurement = 'ft'
 ): Bed {
   const bed = Bed.create({
     garden,
     name,
     width,
-    height,
+    length,
     unitOfMeasurement,
   })
   return bed
