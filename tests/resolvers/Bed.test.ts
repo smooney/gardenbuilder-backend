@@ -45,9 +45,12 @@ query Beds {
 `
 
 const createBedMutation = `
-mutation CreateBed($gardenId: Int!, $name: String!) {
-  createBed(gardenId: $gardenId, name: $name) {
+mutation CreateBed($gardenId: Int! $name: String! $length: Int! $width: Int! $unitOfMeasurement: String!) {
+  createBed(gardenId: $gardenId, name: $name, length: $length, width: $width, unitOfMeasurement: $unitOfMeasurement) {
     name
+    length
+    width
+    unitOfMeasurement
   }
 }
 `
@@ -98,14 +101,20 @@ describe('the createBed mutation', () => {
   let name: string
   let gardenId: number
   let response: any
+  let length: number
+  let width: number
+  let unitOfMeasurement: string
 
   beforeAll(async () => {
     name = faker.commerce.productName()
     gardenId = bed.gardenId
+    length = bed.length
+    width = bed.width
+    unitOfMeasurement = bed.unitOfMeasurement
 
     response = await callGraphQL({
       source: createBedMutation,
-      variableValues: { gardenId, name },
+      variableValues: { gardenId, name, length, width, unitOfMeasurement },
       authorizationHeader: token,
     })
   })
