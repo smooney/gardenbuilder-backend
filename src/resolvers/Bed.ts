@@ -46,7 +46,11 @@ export class BedResolver {
   @Mutation(() => Bed)
   async createBed(
     @Arg('gardenId', () => Int) gardenId: number,
-    @Arg('name', () => String) name: string
+    @Arg('name', () => String) name: string,
+    @Arg('length', () => Int) length: number,
+    @Arg('width', () => Int) width: number,
+    @Arg('unitOfMeasurement', () => String) unitOfMeasurement: string
+
     // @Ctx() { req }: Context
   ) {
     // TODO: Validate that garden belongs to owner
@@ -58,6 +62,9 @@ export class BedResolver {
         gardenId,
         garden,
         name,
+        length,
+        width,
+        unitOfMeasurement,
       })
       return await bed.save()
     } catch (err) {
