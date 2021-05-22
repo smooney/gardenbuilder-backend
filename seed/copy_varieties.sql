@@ -2,20 +2,30 @@
 \c main;
 
 -- Truncate table
-TRUNCATE TABLE plant_variety;
+TRUNCATE TABLE variety;
+
+SELECT * FROM variety;
 
 -- Insert
-INSERT INTO plant_variety(
-    "speciesId",
-    "variety"
-)
-VALUES
-
--- Beet
-(4, 'Merlin Hybrid'),
-(4, 'Chioggia'),
-
--- Pepper
-(16, 'Shishito'),
-(16, 'Carmen Red Sweet')
-;
+COPY variety(
+    "id",
+    "basicType",
+    "variety",
+    "instructionsFor",
+    "sproutsIn",
+    "idealTemp",
+    "seedDepth",
+    "spaceApart",
+    "minSun",
+    "growingTips",
+    "frostResistant",
+    "heatResistant",
+    "isFlower",
+    "isFruit",
+    "isHerb",
+    "isVegetable",
+    "isCommon"
+) 
+FROM '/home/dthompson/Code/gardenbuilder-backend-typescript/seed/varieties.csv' 
+DELIMITER ','
+CSV HEADER;

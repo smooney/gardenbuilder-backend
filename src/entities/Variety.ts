@@ -45,30 +45,30 @@ export class Variety extends BaseEntity {
   growingTips: string
 
   @Field(() => Boolean)
-  @Column('boolean', { default: false })
+  @Column('boolean', { default: false, nullable: true })
   frostResistant: boolean
 
   @Field(() => Boolean)
-  @Column('boolean', { default: false })
+  @Column('boolean', { default: false, nullable: true })
   heatResistant: boolean
 
   @Field(() => Boolean)
-  @Column('boolean', { default: false })
+  @Column('boolean', { default: false, nullable: true })
   isFlower: boolean
 
   @Field(() => Boolean)
-  @Column('boolean', { default: false })
+  @Column('boolean', { default: false, nullable: true })
   isFruit: boolean
 
   @Field(() => Boolean)
-  @Column('boolean', { default: false })
+  @Column('boolean', { default: false, nullable: true })
   isHerb: boolean
 
   @Field(() => Boolean)
-  @Column('boolean', { default: false })
+  @Column('boolean', { default: false, nullable: true })
   isVegetable: boolean
 
   @Field(() => Boolean)
-  @Column('boolean', { default: false })
+  @Column('boolean', { default: false, nullable: true })
   isCommon: boolean
 }
