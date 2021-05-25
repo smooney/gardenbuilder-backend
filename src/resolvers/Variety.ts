@@ -1,20 +1,31 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-// import { errorResponse } from '../utils'
-// import { Arg, Resolver, Query } from 'type-graphql'
-// import { Variety, VarietiesResponse } from '../types'
+import { ApolloError } from 'apollo-server'
+import { Arg, Resolver, Query } from 'type-graphql'
+import { createQueryBuilder } from 'typeorm'
+import { Variety } from '../types'
 
-// @Resolver()
-// export class VarietiesResolver {
-//   @Query(() => VarietiesResponse)
-//   async varieties(@Arg('species', () => String) species: string) {
-//     try {
-//       const varieties: Variety[] = await getVarieties(species)
-//       // TODO: Insert varieties into database
-//       insertVarietiesIntoDatabase(varieties)
+@Resolver()
+export class VarietiesResolver {
 
-//       return { varieties }
-//     } catch (err) {
-//       return errorResponse(err.message)
-//     }
-//   }
-// }
+  @Query(() => [Variety])
+  async basicTypes(
+      @Arg('name', { nullable: true }) name: string,
+    //   @Arg('isFlower', { nullable: true }) isFlower: boolean,
+    //   @Arg('isFruit', { nullable: true }) isFruit: boolean,
+    //   @Arg('isHerb', { nullable: true }) isHerb: boolean,
+    //   @Arg('isVegetable', { nullable: true }) isVegetable: boolean
+  ) {
+    try {
+        let query = createQueryBuilder('variety') 
+            .select('basicType')
+            .distinct(true)
+
+        if (name) query = query.where('variety.basicType like :name', { name: `%${name}%`})
+        const basicTypes = await query.getRawMany() 
+        return basicTypes
+    } catch (err) {
+      throw new ApolloError(err.message)
+    }
+  }
+
+}
