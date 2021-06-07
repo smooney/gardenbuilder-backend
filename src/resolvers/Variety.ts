@@ -2,11 +2,12 @@
 import { ApolloError } from 'apollo-server'
 import { Arg, Resolver, Query } from 'type-graphql'
 import { createQueryBuilder } from 'typeorm'
-import { Variety } from '../types'
+// import { BasicType } from '../types'
+import { Variety } from '../entities'
 
 @Resolver()
 export class VarietyResolver {
-  @Query(() => [Variety])
+  @Query(() => [String])
   async basicTypes(
     @Arg('name', { nullable: true }) name: string
     //   @Arg('isFlower', { nullable: true }) isFlower: boolean,
@@ -15,18 +16,19 @@ export class VarietyResolver {
     //   @Arg('isVegetable', { nullable: true }) isVegetable: boolean
   ) {
     try {
-      let query = createQueryBuilder('variety')
-        .select('basicType')
+      let query = createQueryBuilder()
+        .select("variety.basicType AS basicType")
+        .from(Variety, "variety")
         .distinct(true)
 
       if (name)
-        query = query.where('variety.basicType like :name', {
+        query = query.where('variety.basicType ilike :name', {
           name: `%${name}%`,
         })
 
       const basicTypes = await query.getRawMany()
 
-      return basicTypes
+      return basicTypes.map(obj => obj.basictype)
     } catch (err) {
       throw new ApolloError(err.message)
     }
