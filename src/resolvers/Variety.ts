@@ -17,8 +17,8 @@ export class VarietyResolver {
   ) {
     try {
       let query = createQueryBuilder()
-        .select("variety.basicType AS basicType")
-        .from(Variety, "variety")
+        .select('variety.basicType AS basicType')
+        .from(Variety, 'variety')
         .distinct(true)
 
       if (name)
@@ -28,7 +28,7 @@ export class VarietyResolver {
 
       const basicTypes = await query.getRawMany()
 
-      return basicTypes.map(obj => obj.basictype)
+      return basicTypes.map((obj) => obj.basictype)
     } catch (err) {
       throw new ApolloError(err.message)
     }

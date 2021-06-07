@@ -1,19 +1,12 @@
 import { ExecutionResult } from 'graphql'
 import { Connection } from 'typeorm'
-import {
-  callGraphQL,
-  testConnection,
-} from '../testUtils'
+import { callGraphQL, testConnection } from '../testUtils'
 
 let connection: Connection
-let response: ExecutionResult<{ [key: string]: any; }>
+let response: ExecutionResult<{ [key: string]: any }>
 
 beforeAll(async () => {
   connection = await testConnection()
-  response = await callGraphQL({
-    source: basicTypesQuery,
-    // variableValues: { id: bed.id },
-  })
 })
 
 afterAll(async () => {
@@ -26,7 +19,9 @@ query BasicTypes {
 }
 `
 
-it('returns an array', async () => {
-  expect(Array.isArray(response?.data?.basicTypes)).toBeTruthy()
+describe('the basicTypes query', async () => {
+  it('returns an array', async () => {
+    response = await callGraphQL({ source: basicTypesQuery })
+    expect(Array.isArray(response?.data?.basicTypes)).toBeTruthy()
+  })
 })
-
