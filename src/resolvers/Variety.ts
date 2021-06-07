@@ -5,7 +5,7 @@ import { createQueryBuilder } from 'typeorm'
 import { Variety } from '../types'
 
 @Resolver()
-export class VarietiesResolver {
+export class VarietyResolver {
   @Query(() => [Variety])
   async basicTypes(
     @Arg('name', { nullable: true }) name: string
@@ -23,7 +23,9 @@ export class VarietiesResolver {
         query = query.where('variety.basicType like :name', {
           name: `%${name}%`,
         })
+
       const basicTypes = await query.getRawMany()
+
       return basicTypes
     } catch (err) {
       throw new ApolloError(err.message)
