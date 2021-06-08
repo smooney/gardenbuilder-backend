@@ -135,7 +135,7 @@ describe('the createBed mutation', () => {
   })
 })
 
-describe.only('the updateBedDimensions mutation', () => {
+describe('the updateBedDimensions mutation', () => {
   it('updates a bed in the database', async () => {
     const length = 3
     const width = 3

@@ -1,8 +1,8 @@
 import { ExecutionResult } from 'graphql'
-import { Connection } from 'typeorm'
+import typeorm from 'typeorm'
 import { callGraphQL, testConnection } from '../testUtils'
 
-let connection: Connection
+let connection: typeorm.Connection
 let response: ExecutionResult<{ [key: string]: any }>
 
 beforeAll(async () => {
