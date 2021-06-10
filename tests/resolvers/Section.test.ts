@@ -104,9 +104,7 @@ describe('the section query', () => {
     })
     expect(response?.errors).toHaveLength(1)
     expect(
-      response?.errors?.some((item) =>
-        item?.message.match(/could not find/)
-      )
+      response?.errors?.some((item) => item?.message.match(/could not find/))
     ).toBeTruthy()
     expect(response?.data).toBeNull()
   })
