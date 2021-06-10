@@ -49,12 +49,21 @@ describe('createUser', () => {
   })
 
   it('returns an error message if the user already exists', async () => {
+    await callGraphQL({
+      source: createUserMutation,
+      variableValues: globalUser,
+    })
     const response = await callGraphQL({
       source: createUserMutation,
       variableValues: globalUser,
     })
-    const errorMessage = response?.data?.createUser.errors[0].message
-    expect(errorMessage).toMatch(/exists/)
+
+    expect(response?.errors).toBeTruthy()
+    expect(
+      response?.errors?.some((item) =>
+        item?.message.match(/User already exists/)
+      )
+    ).toBeTruthy()
   })
 
   it('returns a jwt token', async () => {
@@ -108,17 +117,19 @@ describe('authenticateUser', () => {
   })
 
   it('returns an error message, no token and no user if user not in database', async () => {
-    const authenticateUserResponse = await callGraphQL({
+    const response = await callGraphQL({
       source: authenticateUserMutation,
       variableValues: {
         email: faker.internet.email(),
         password: faker.internet.password(),
       },
     })
+    expect(response?.errors).toHaveLength(1)
     expect(
-      authenticateUserResponse?.data?.authenticateUser.errors
-    ).toHaveLength(1)
-    expect(authenticateUserResponse?.data?.authenticateUser.user).toBeNull()
-    expect(authenticateUserResponse?.data?.authenticateUser.token).toBeNull()
+      response?.errors?.some((item) =>
+        item?.message.match(/User does not exist/)
+      )
+    ).toBeTruthy()
+    expect(response?.data).toBeNull()
   })
 })

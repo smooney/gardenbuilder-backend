@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Resolver, Query, Mutation, Arg, Int } from 'type-graphql'
 import { Section } from '../entities'
-import { errorResponse } from '../utils'
 import { SectionResponse, SectionsResponse } from '../types'
+import { ApolloError } from 'apollo-server'
 
 @Resolver()
 export class SectionResolver {
@@ -10,7 +10,7 @@ export class SectionResolver {
   async section(@Arg('id', () => Int) id: number) {
     const section = await Section.findOne(id)
     if (!section) {
-      return errorResponse('Section not found')
+      throw new ApolloError('We could not find a section with that id')
     }
     return { section }
   }
@@ -21,7 +21,7 @@ export class SectionResolver {
       const sections = Section.find({ where: { bedId } })
       return { sections }
     } catch (err) {
-      return errorResponse(err.message)
+      throw new ApolloError(err.message)
     }
   }
 
@@ -46,7 +46,7 @@ export class SectionResolver {
       await section.save()
       return { section }
     } catch (err) {
-      return errorResponse(err.message)
+      throw new ApolloError(err.message)
     }
   }
 }

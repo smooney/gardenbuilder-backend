@@ -12,10 +12,10 @@ import {
 import argon2 from 'argon2'
 import { User } from '../entities/User'
 import { Response } from '../types/Response'
-import { errorResponse } from '../utils/errorResponse'
 import jwt from '../utils/jwt'
 import { Context } from '../types/Context'
 import { getTokenIfPasswordIsValid, getUserIdFromRequest } from '../utils'
+import { ApolloError } from 'apollo-server'
 
 @ObjectType()
 class UserResponse extends Response {
@@ -41,7 +41,7 @@ export class UserResolver {
   async user(@Arg('id', () => Int) id: number) {
     const user = await User.findOne(id)
     if (!user) {
-      return errorResponse('User not found')
+      throw new ApolloError('We could not find a user with that id')
     }
     return { user }
   }
@@ -51,7 +51,7 @@ export class UserResolver {
     const id = getUserIdFromRequest(req) as number
     const user = await User.findOne({ id })
     if (!user) {
-      return errorResponse('User not found')
+      throw new ApolloError('We could not find a user with that id')
     }
     return { user }
   }
@@ -62,7 +62,7 @@ export class UserResolver {
       const users = User.find()
       return { users }
     } catch (err) {
-      return errorResponse(err.message)
+      throw new ApolloError(err.message)
     }
   }
 
@@ -74,7 +74,7 @@ export class UserResolver {
     @Arg('lastName') lastName: string
   ) {
     if (!/@/i.test(email)) {
-      return errorResponse('Not a valid email address')
+      throw new ApolloError('Not a valid email address')
     }
     try {
       const hashedPassword = await argon2.hash(password)
@@ -90,7 +90,7 @@ export class UserResolver {
     } catch (err) {
       const errorMessage =
         err.code === '23505' ? 'User already exists' : err.message
-      return errorResponse(errorMessage)
+      throw new ApolloError(errorMessage)
     }
   }
 
@@ -100,7 +100,7 @@ export class UserResolver {
     @Arg('password') password: string
   ) {
     if (!/@/i.test(email)) {
-      return errorResponse('Not a valid email address')
+      throw new ApolloError('Not a valid email address')
     }
     try {
       const user = await User.findOne({
@@ -111,11 +111,11 @@ export class UserResolver {
         if (token) {
           return { user, token }
         }
-        return errorResponse('Invalid password')
+        throw new ApolloError('Invalid password')
       }
-      return errorResponse('User does not exist')
+      throw new ApolloError('User does not exist')
     } catch (err) {
-      return errorResponse(err.message)
+      throw new ApolloError(err.message)
     }
   }
 }
