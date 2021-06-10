@@ -95,18 +95,22 @@ describe('the section query', () => {
     expect(selectedSection.plantType).toBe(section.plantType)
   })
 
-  it('returns no sections if called with a nonexistent id', async () => {
+  it('returns an error message if called with a nonexistent id', async () => {
     const FAKE_ID = 666
     const response = await callGraphQL({
       source: sectionQuery,
       variableValues: { id: FAKE_ID },
       authorizationHeader: token,
     })
-    expect(response?.data?.section.section).toBeNull()
+    expect(response?.errors).toHaveLength(1)
+    expect(
+      response?.errors?.some((item) =>
+        item?.message.match(/could not find/)
+      )
+    ).toBeTruthy()
+    expect(response?.data).toBeNull()
   })
-})
 
-describe('the sections query', () => {
   it('returns a list of sections', async () => {
     const response = await callGraphQL({
       source: sectionsQuery,
