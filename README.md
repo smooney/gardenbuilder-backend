@@ -16,7 +16,7 @@ Alternatively, you could run postgresql locally using docker: `docker run -e POS
 
 Once you have postgresql set up, follow these steps:
 - while logged in as root, make a table with the same name as your  desired username. If your username is `coolUser`, for example, name your table `coolUser`
-- make a `main` table and a `test` table
+- make a `main` database and a `test` database
 - give your user privileges to those tables with `GRANT ALL PRIVILEGES ON DATABASE main TO coolUser;` and `GRANT ALL PRIVILEGES ON DATABASE test TO coolUser`;
 
 ### Environment Variable Setup
@@ -33,7 +33,9 @@ PORT=8000
 
 ### To Run
 
-At project root, type `npm run start:dev`. This will start the API. You'll want to open up a second terminal at root and type `npm run watch` so that your code changes are compiled from typescript to javascript as you save them. 
+To stand up the database run `docker-compose up`
+
+At project root, type `npm run build` then `npm run start:dev`. This will start the API. You'll want to open up a second terminal at root and type `npm run watch` so that your code changes are compiled from typescript to javascript as you save them. 
 
 Then navigate to [localhost:8000/graphql](http://localhost:8000/graphql).
 You should see the graphiQL editor and be able to write queries like
