@@ -1,9 +1,5 @@
 import { Connection } from 'typeorm'
-import {
-  createGarden,
-  createUser,
-  testConnection,
-} from '../testUtils'
+import { createGarden, createUser, testConnection } from '../testUtils'
 import { Garden, User } from '../../src/entities'
 
 let connection: Connection
