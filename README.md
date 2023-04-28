@@ -33,7 +33,7 @@ PORT=8000
 
 ### To Run
 
-To stand up the database run `docker-compose up`
+To stand up the database run `docker swarm init` followed by `docker compose up`
 
 At project root, type `npm run build` then `npm run start:dev`. This will start the API. You'll want to open up a second terminal at root and type `npm run watch` so that your code changes are compiled from typescript to javascript as you save them. 
 
@@ -55,3 +55,7 @@ Run `npm test` or `npm run test`. Tests also automatically run each time you try
 ## Contributing
 
 To Contribute, read our [Contribution Guidelines](https://github.com/gardenbuilder/gardenbuilder-backend-typescript/blob/master/CONTRIBUTING.md#contributing)
+
+## Sources / references
+
+Plant names from https://gist.github.com/researchranks/ffe24c33df30e64f51271ddec83b4af6

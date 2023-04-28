@@ -9,8 +9,8 @@ SELECT * FROM variety;
 -- Insert
 COPY variety(
     "id",
-    "basicType",
     "variety",
+    "basicType",
     "instructionsFor",
     "sproutsIn",
     "idealTemp",
@@ -26,6 +26,6 @@ COPY variety(
     "isVegetable",
     "isCommon"
 ) 
-FROM '/home/dthompson/Code/gardenbuilder-backend-typescript/seed/varieties.csv' 
+FROM './variety.csv' 
 DELIMITER ','
 CSV HEADER;
