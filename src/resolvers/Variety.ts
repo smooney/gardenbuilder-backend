@@ -1,9 +1,21 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { ApolloError } from 'apollo-server'
-import { Arg, Resolver, Query } from 'type-graphql'
+import { Arg, Mutation, Resolver, Query, InputType, Field } from 'type-graphql'
 import { createQueryBuilder } from 'typeorm'
 // import { BasicType } from '../types'
 import { Variety } from '../entities/Variety'
+
+@InputType()
+class UpdateVarietyDetails implements Partial<Variety> {
+  @Field()
+  id: number
+
+  @Field()
+  variety: string
+
+  @Field()
+  basicType: string
+}
 
 @Resolver()
 export class VarietyResolver {
@@ -41,5 +53,36 @@ export class VarietyResolver {
     } catch (err) {
       throw new ApolloError(err.message)
     }
+  }
+
+  @Mutation(() => Variety)
+  async createVariety(
+    @Arg('basicType', () => String) basicType: string,
+    @Arg('variety', () => String) variety: string
+  ) {
+    try {
+      const newVariety = Variety.create({
+        basicType,
+        variety,
+      })
+
+      const response = await newVariety.save()
+      return response
+    } catch (err) {
+      throw new ApolloError(err.message)
+    }
+  }
+
+  @Mutation(() => Variety)
+  async updateVariety(
+    @Arg('input') input: UpdateVarietyDetails
+  ) {
+    const variety = await Variety.findOne({id: input.id}) 
+
+    if (input.variety && variety) {
+      variety.variety = input.variety
+    }
+
+    return await variety?.save()
   }
 }
